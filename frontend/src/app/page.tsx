@@ -13,8 +13,8 @@ export default function Home() {
   const nearbyPlaces = filterNearbyPlaces({
     userLocation: location,
     places: allPlaces,
-    filters: { type: 'hotel', minRating: 4 },
-    maxDistanceKm: 5,
+    filters: { type: 'hotel', minRating: 1 },
+    maxDistanceKm: 100,
   });
   return (
     <main className="flex min-h-screen max-w-screen flex-col items-center justify-start py-24 px-16">

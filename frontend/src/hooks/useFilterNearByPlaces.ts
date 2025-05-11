@@ -28,7 +28,7 @@ export function filterNearbyPlaces({
   userLocation,
   places,
   filters,
-  maxDistanceKm = 10,
+  maxDistanceKm = 100,
 }: FilterOptions): IPlace[] {
   return places
     .filter((place) => {
