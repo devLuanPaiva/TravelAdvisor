@@ -5,13 +5,13 @@ import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
 const containerStyle = {
     width: '100%',
-    height: '500px',
+    height: '100%',
+    borderRadius: '10px',
 };
 
 export default function MyLocationMap() {
     const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
     const [error, setError] = useState<string | null>(null);
-
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? '',
     });
