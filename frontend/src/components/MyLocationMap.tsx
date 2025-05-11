@@ -1,6 +1,5 @@
 'use client';
 import { GoogleMap, Marker } from '@react-google-maps/api';
-import { useLocation } from '@/contexts/LocationContext';
 
 const containerStyle = {
     width: '100%',
@@ -8,10 +7,12 @@ const containerStyle = {
     borderRadius: '10px',
 };
 
-export default function MyLocationMap() {
-    const { location, error, isLoaded } = useLocation();
+interface MyLocationMapProps {
+    location: { lat: number; lng: number }
+    error: string | null;
+}
+export default function MyLocationMap({ location, error }: Readonly<MyLocationMapProps>) {
     if (error) return <p>{error}</p>;
-    if (!isLoaded || !location) return <p>Carregando mapa com sua localização atual...</p>;
 
     return (
         <GoogleMap mapContainerStyle={containerStyle} center={location} zoom={16}>
