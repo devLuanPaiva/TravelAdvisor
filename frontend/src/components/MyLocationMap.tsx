@@ -10,38 +10,43 @@ const containerStyle = {
 
 export default function MyLocationMap() {
     const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? '',
     });
 
     useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    setLocation({
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                    });
-                },
-                (error) => {
-                    console.error('Erro ao obter localização:', error);
-                },
-                {
-                    enableHighAccuracy: true,
-                    timeout: 10000,
-                    maximumAge: 0,
-                }
-            );
-        } else {
-            console.error('Geolocalização não suportada pelo navegador');
+        if (!navigator.geolocation) {
+            setError('Geolocalização não é suportada pelo navegador');
+            return;
         }
+
+        const watchId = navigator.geolocation.watchPosition(
+            (position) => {
+                const { latitude, longitude, accuracy } = position.coords;
+                if (accuracy <= 100) {
+                    setLocation({ lat: latitude, lng: longitude });
+                }
+            },
+            (err) => {
+                setError('Erro ao obter localização: ' + err.message);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 0,
+            }
+        );
+
+        return () => navigator.geolocation.clearWatch(watchId);
     }, []);
 
-    if (!isLoaded || !location) return <p>Carregando mapa...</p>;
+    if (error) return <p>{error}</p>;
+    if (!isLoaded || !location) return <p>Carregando mapa com sua localização atual...</p>;
 
     return (
-        <GoogleMap mapContainerStyle={containerStyle} center={location} zoom={15}>
+        <GoogleMap mapContainerStyle={containerStyle} center={location} zoom={16}>
             <Marker position={location} />
         </GoogleMap>
     );
