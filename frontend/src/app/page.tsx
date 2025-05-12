@@ -1,5 +1,6 @@
 "use client";
 import MyLocationMap from "@/components/MyLocationMap";
+import NearbyRestaurants from "@/components/NearbyRestaurants";
 import { useLocation } from "@/contexts/LocationContext";
 import { useNearbyPlaces } from "@/hooks";
 
@@ -17,18 +18,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen max-w-screen flex-col items-center justify-start py-24 px-16">
-      <section className="w-full flex gap-5 h-screen">
-        <aside className="w-1/4 h-full overflow-auto">
-          {places.map((place) => (
-            <li key={place.id}>
-              {place.name} - {place.averageRating}⭐
-            </li>
-          ))}
-        </aside>
-        <div className="w-3/4 h-full">
-          <MyLocationMap location={location} error={error} />
-        </div>
-      </section>
+      <NearbyRestaurants />
     </main>
   );
 }
