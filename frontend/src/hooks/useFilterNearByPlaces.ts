@@ -1,54 +1,78 @@
-import { IPlace, ISearchFilters } from "@core";
+"use client";
+import { useEffect, useState } from "react";
+import { IPlace, PlaceType } from "@core";
 
-interface FilterOptions {
-  userLocation: { lat: number; lng: number };
-  places: IPlace[];
-  filters?: ISearchFilters;
-  maxDistanceKm?: number;
+interface UseNearbyPlacesProps {
+  city: string;
 }
 
-function getDistanceInKm(
-  coord1: { lat: number; lng: number },
-  coord2: { lat: number; lng: number }
-): number {
-  const R = 6371;
-  const dLat = (coord2.lat - coord1.lat) * (Math.PI / 180);
-  const dLng = (coord2.lng - coord1.lng) * (Math.PI / 180);
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(coord1.lat * (Math.PI / 180)) *
-      Math.cos(coord2.lat * (Math.PI / 180)) *
-      Math.sin(dLng / 2) *
-      Math.sin(dLng / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
+interface RapidApiAutoCompleteItem {
+  detailsV2: {
+    locationId: string;
+    names: { name: string };
+    geocode: { latitude: number; longitude: number };
+    reviewRating?: { rating?: number };
+    placeType?: string;
+    priceLevel?: string;
+  };
 }
 
-export function filterNearbyPlaces({
-  userLocation,
-  places,
-  filters,
-  maxDistanceKm = 100,
-}: FilterOptions): IPlace[] {
-  return places
-    .filter((place) => {
-      const distance = getDistanceInKm(userLocation, place.location);
-      const meetsDistance = distance <= maxDistanceKm;
+export function useNearbyPlaces({ city }: UseNearbyPlacesProps) {
+  const [places, setPlaces] = useState<IPlace[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-      const meetsType = !filters?.type || place.type === filters.type;
-      const meetsRating =
-        filters?.minRating === undefined ||
-        place.averageRating >= filters.minRating;
-      const meetsPrice =
-        filters?.maxPriceLevel === undefined ||
-        (place.priceLevel !== undefined &&
-          place.priceLevel <= filters.maxPriceLevel);
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      setLoading(true);
+      try {
+        const url = `https://travel-advisor.p.rapidapi.com/locations/v2/auto-complete?query=${encodeURIComponent(
+          city
+        )}&lang=pt-BR&units=km`;
 
-      return meetsDistance && meetsType && meetsRating && meetsPrice;
-    })
-    .sort(
-      (a, b) =>
-        getDistanceInKm(userLocation, a.location) -
-        getDistanceInKm(userLocation, b.location)
-    );
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY!,
+            "x-rapidapi-host": "travel-advisor.p.rapidapi.com",
+          },
+        });
+
+        const result = await response.json();
+
+        const extracted: IPlace[] =
+          (result?.data?.Typeahead_autocomplete?.results as RapidApiAutoCompleteItem[])
+            ?.filter((r) => r.detailsV2?.names?.name)
+            .map((r) => ({
+              id: r.detailsV2.locationId,
+              name: r.detailsV2.names.name,
+              location: {
+                lat: r.detailsV2.geocode.latitude,
+                lng: r.detailsV2.geocode.longitude,
+              },
+              averageRating: r.detailsV2.reviewRating?.rating ?? 0,
+              type: (r.detailsV2.placeType as PlaceType) ?? "attraction",
+              priceLevel: parseInt(r.detailsV2?.priceLevel ?? "0") || undefined,
+              address: "Endereço não disponível",
+              phone: undefined,
+              images: [],
+            })) ?? [];
+
+
+        setPlaces(extracted);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Erro ao buscar locais.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (city) fetchPlaces();
+  }, [city]);
+
+  return { places, loading, error };
 }
