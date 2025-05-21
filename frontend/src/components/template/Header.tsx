@@ -5,7 +5,7 @@ import { MdLocationOn } from "react-icons/md";
 interface HeaderProps {
   name: string;
 }
-export default function Header({ name }: Readonly<HeaderProps>) {
+export function Header({ name }: Readonly<HeaderProps>) {
   const [city, setCity] = useState<string | null>(null);
 
   useEffect(() => {
