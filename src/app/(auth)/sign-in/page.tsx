@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { signIn } from "@/lib/auth";
+import { signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import executeAction from "@/lib/executeAction";
@@ -30,11 +30,25 @@ export default async function SignInPage() {
           className="space-y-4"
           action={async (formData) => {
             "use server";
-            await executeAction({
-              actionFn: async () => {
-                await signIn("credentials", formData);
-              },
-            });
+            const email = formData.get("email") as string;
+            const password = formData.get("password") as string;
+
+            try {
+              const result = await signIn("credentials", {
+                email,
+                password,
+                redirect: false,
+              });
+
+              if (result?.error) {
+                console.error("Login failed:", result.error);
+                return;
+              }
+
+              redirect("/home");
+            } catch (error) {
+              console.error("Login error:", error);
+            }
           }}
         >
           <Input

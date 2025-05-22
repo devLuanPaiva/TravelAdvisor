@@ -27,9 +27,15 @@ export default async function SignUpPage() {
           className="space-y-4"
           action={async (formData) => {
             "use server";
-            const res = await signUp(formData);
-            if (res.success) {
-              redirect("/sign-in");
+            try {
+              const res = await signUp(formData);
+              if (res.success) {
+                redirect("/sign-in");
+              } else {
+                console.error("Signup failed:", res.message);
+              }
+            } catch (error) {
+              console.error("Signup error:", error);
             }
           }}
         >
