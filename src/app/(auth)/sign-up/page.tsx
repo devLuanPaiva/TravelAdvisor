@@ -29,7 +29,12 @@ export default async function SignUpPage() {
             "use server";
             try {
               const res = await signUp(formData);
+
               if (res.success) {
+                if (res.redirect) {
+                  return;
+                }
+
                 redirect("/sign-in");
               } else {
                 console.error("Signup failed:", res.message);
