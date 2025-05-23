@@ -1,15 +1,38 @@
+"use client";
+
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import executeAction from "@/lib/executeAction";
 import { Button } from "@/components/ui/button";
 import { GoogleSignIn } from "@/components/auth/GoogleSigIn";
-import { getServerSession } from "next-auth";
 
-export default async function SignInPage() {
-  // const session = await getServerSession();
-  // if (session) redirect("/home");
+export default function SignInPage() {
+  const router = useRouter();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        console.error("Login failed:", result.error);
+        return;
+      }
+
+      router.push("/home");
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black">
@@ -26,31 +49,7 @@ export default async function SignInPage() {
             </span>
           </div>
         </div>
-        <form
-          className="space-y-4"
-          action={async (formData) => {
-            "use server";
-            const email = formData.get("email") as string;
-            const password = formData.get("password") as string;
-
-            try {
-              const result = await signIn("credentials", {
-                email,
-                password,
-                redirect: false,
-              });
-
-              if (result?.error) {
-                console.error("Login failed:", result.error);
-                return;
-              }
-
-              redirect("/home");
-            } catch (error) {
-              console.error("Login error:", error);
-            }
-          }}
-        >
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
             name="email"
             placeholder="Email"
