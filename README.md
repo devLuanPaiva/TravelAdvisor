@@ -50,18 +50,18 @@ npm install
 
 ## 🔐 Variáveis de Ambiente
 
-# APIs externas
+### APIs externas
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
 NEXT_PUBLIC_RAPIDAPI_KEY=
 
-# NextAuth
+### NextAuth
 NEXTAUTH_URL=
 NEXTAUTH_SECRET=
 
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 
-# Banco de Dados (PostgreSQL)
+### Banco de Dados (PostgreSQL)
 DATABASE_URL=
 
 ⚠️ Certifique-se de que o banco de dados esteja rodando antes de executar as migrações.
