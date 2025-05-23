@@ -5,6 +5,7 @@ import executeAction from "./executeAction";
 const signUp = async (formData: FormData) => {
     return executeAction({
         actionFn: async () => {
+            const name = formData.get("name")?.toString();
             const email = formData.get("email")?.toString();
             const password = formData.get("password")?.toString();
 
@@ -24,6 +25,7 @@ const signUp = async (formData: FormData) => {
 
             const newUser = await db.user.create({
                 data: {
+                    name,
                     email: validatedData.email.toLowerCase(),
                     password: validatedData.password,
                 },

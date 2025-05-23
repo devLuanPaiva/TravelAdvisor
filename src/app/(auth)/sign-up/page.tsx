@@ -1,13 +1,10 @@
 import { signUp } from "@/lib/actions";
-import { redirect } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { GoogleSignIn } from "@/components/auth/GoogleSigIn";
-import { getServerSession } from "next-auth";
+
 export default async function SignUpPage() {
-  // const session = await getServerSession();
-  // if (session) redirect("/home");
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black">
       <div className="bg-white rounded-2xl shadow-xl p-10 w-full max-w-sm text-center">
@@ -28,22 +25,19 @@ export default async function SignUpPage() {
           action={async (formData) => {
             "use server";
             try {
-              const res = await signUp(formData);
-
-              if (res.success) {
-                if (res.redirect) {
-                  return;
-                }
-
-                redirect("/sign-in");
-              } else {
-                console.error("Signup failed:", res.message);
-              }
+              await signUp(formData);
             } catch (error) {
               console.error("Signup error:", error);
             }
           }}
         >
+          <Input
+            name="name"
+            placeholder="Nome"
+            type="text"
+            required
+            autoComplete="name"
+          />
           <Input
             name="email"
             placeholder="Email"
