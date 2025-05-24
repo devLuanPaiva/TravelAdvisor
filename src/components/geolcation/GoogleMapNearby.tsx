@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import { PlacesSidebar } from './PlacesSidebar'
+import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
+
 
 type Place = google.maps.places.PlaceResult
 
@@ -24,7 +26,7 @@ export function GoogleMapNearby() {
     const [error, setError] = useState<string | null>(null)
     const [selectedType, setSelectedType] = useState<string>('restaurant')
     const [currentPosition, setCurrentPosition] = useState<{ lat: number; lng: number } | null>(null)
-
+    const [isShowSidebar, setIsShowSidebar] = useState(true)
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!
 
     const { isLoaded, loadError } = useJsApiLoader({
@@ -76,9 +78,16 @@ export function GoogleMapNearby() {
             <PlacesSidebar
                 placeTypes={placeTypes}
                 places={places}
-                selectedType={selectedType} setSelectedType={setSelectedType}
+                selectedType={selectedType}
+                setSelectedType={setSelectedType}
+                isShowSidebar={isShowSidebar}
             />
-            <section className='w-3/4 h-screen p-10'>
+            <section className={'flex flex-col gap-2 h-screen p-10 relative' + (isShowSidebar ? ' w-3/4' : ' w-full')} >
+                <button
+                    className="w-fit bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-10"
+                    onClick={() => setIsShowSidebar(!isShowSidebar)}>
+                    {isShowSidebar ? <GoSidebarCollapse className="w-6 h-6" /> : <GoSidebarExpand className="w-6 h-6" />}
+                </button>
                 {currentPosition ? (
                     <GoogleMap
                         mapContainerStyle={{ width: '100%', height: '100%' }}
