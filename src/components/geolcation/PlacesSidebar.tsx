@@ -22,10 +22,13 @@ export function PlacesSidebar({ placeTypes, places, selectedType, setSelectedTyp
         : placesWithImages.slice(0, 3);
 
     return (
-        <aside className={'w-1/4 h-full bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white p-4 overflow-y-auto border-r' + (isShowSidebar ? ' block' : ' hidden')}>
+        <aside
+            className={`w-1/4 h-full bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white p-4 overflow-y-auto border-r border-gray-700 transition-all duration-300 ease-in-out ${isShowSidebar ? 'block' : 'hidden'
+                }`}
+        >
             <h2 className="text-xl font-semibold mb-4">
                 <button
-                    className="w-full flex justify-between items-center text-lg font-bold text-gray-700 mb-2 hover:text-blue-600"
+                    className="w-full flex justify-between items-center text-base font-bold text-gray-200 hover:text-white transition-colors duration-200"
                     onClick={() => setIsTypeOpen(!isTypeOpen)}
                 >
                     Tipos de Lugar
@@ -42,7 +45,9 @@ export function PlacesSidebar({ placeTypes, places, selectedType, setSelectedTyp
                     {placeTypes.map((type) => (
                         <li key={type.value}>
                             <button
-                                className={`w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 ${selectedType === type.value ? 'bg-blue-100 text-blue-700' : ''
+                                className={`w-full text-left px-3 py-2 rounded-md transition-colors duration-200 ${selectedType === type.value
+                                        ? 'bg-blue-600 text-white'
+                                        : 'bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white'
                                     }`}
                                 onClick={() => setSelectedType(type.value)}
                             >
@@ -53,12 +58,12 @@ export function PlacesSidebar({ placeTypes, places, selectedType, setSelectedTyp
                 </ul>
             )}
 
-            <h3 className="text-lg font-semibold mb-2">Resultados próximos</h3>
-            <div className="space-y-4">
+            <h3 className="text-lg font-semibold mb-3 text-gray-100">Resultados próximos</h3>
+            <div className="space-y-4 flex flex-col items-center">
                 {displayedPlaces.map((place, index) => (
                     <div
                         key={place.place_id ?? index}
-                        className=" p-3 rounded shadow-sm"
+                        className="bg-gray-800 hover:bg-gray-700 p-3 rounded-lg shadow transition duration-300 w-full"
                     >
                         {place.photos?.[0] && (
                             <Image
@@ -69,18 +74,16 @@ export function PlacesSidebar({ placeTypes, places, selectedType, setSelectedTyp
                                 className="w-full h-40 object-cover rounded mb-2"
                             />
                         )}
-                        <h4 className="font-semibold text-sm">{place.name}</h4>
+                        <h4 className="font-semibold text-sm text-gray-200">{place.name}</h4>
                         {place.rating && (
-                            <p className="text-yellow-600 text-sm">
-                                ⭐ {place.rating.toFixed(1)} / 5
-                            </p>
+                            <p className="text-yellow-400 text-sm">⭐ {place.rating.toFixed(1)} / 5</p>
                         )}
                     </div>
                 ))}
 
                 {placesWithImages.length > 3 && !showAllPlaces && (
                     <button
-                        className="mt-2 text-blue-500 hover:underline"
+                        className="mt-2 text-blue-400 hover:text-blue-300 transition-colors text-center "
                         onClick={() => setShowAllPlaces(true)}
                     >
                         Mostrar mais
@@ -88,7 +91,7 @@ export function PlacesSidebar({ placeTypes, places, selectedType, setSelectedTyp
                 )}
                 {placesWithImages.length > 3 && showAllPlaces && (
                     <button
-                        className="mt-2 text-blue-500 hover:underline"
+                        className="mt-2 text-blue-400 hover:text-blue-300 transition-colors text-center "
                         onClick={() => setShowAllPlaces(false)}
                     >
                         Mostrar menos
@@ -96,5 +99,6 @@ export function PlacesSidebar({ placeTypes, places, selectedType, setSelectedTyp
                 )}
             </div>
         </aside>
+
     );
 }
