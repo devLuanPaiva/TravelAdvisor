@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { Header } from "@/components/template/Header";
-// import { Logout } from "@/components/shared/Logout";
 import { GoogleMapNearby } from "@/components/geolcation/GoogleMapNearby";
 export default async function HomePage() {
   const session = await getServerSession();
@@ -14,7 +13,6 @@ export default async function HomePage() {
       <main className="p-0 h-[90vh] w-full flex-1  flex flex-col items-center ">
         <GoogleMapNearby session={session} />
       </main>
-      {/* <Logout /> */}
     </div>
   );
 }
