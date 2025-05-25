@@ -3,25 +3,17 @@ import { useEffect, useState } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import { PlacesSidebar } from './PlacesSidebar'
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
+import { Session } from 'next-auth';
 
 
 type Place = google.maps.places.PlaceResult
 
-const placeTypes = [
-    { label: 'Restaurantes', value: 'restaurant' },
-    { label: 'Hotéis', value: 'lodging' },
-    { label: 'Hospitais', value: 'hospital' },
-    { label: 'Mercados', value: 'supermarket' },
-    { label: 'Cafés', value: 'cafe' },
-    { label: 'Farmácias', value: 'pharmacy' },
-    { label: 'Bancos', value: 'bank' },
-    { label: 'Postos de Gasolina', value: 'gas_station' },
-    { label: 'Parques', value: 'park' },
-    { label: 'Museus', value: 'museum' },
-]
+export interface GoogleMapNearbyProps {
+    session: Session
+}
 
+export function GoogleMapNearby({session}: Readonly<GoogleMapNearbyProps>) {
 
-export function GoogleMapNearby() {
     const [places, setPlaces] = useState<Place[]>([])
     const [error, setError] = useState<string | null>(null)
     const [selectedType, setSelectedType] = useState<string>('restaurant')
@@ -74,15 +66,15 @@ export function GoogleMapNearby() {
     if (!isLoaded) return <div>Carregando API do Google Maps...</div>
 
     return (
-        <section className='flex items-start gap-4 p-0 justify-between w-full h-screen'>
+        <section className='flex items-start gap-4 p-0 justify-between w-full h-full'>
             <PlacesSidebar
-                placeTypes={placeTypes}
+                session={session}
                 places={places}
                 selectedType={selectedType}
                 setSelectedType={setSelectedType}
                 isShowSidebar={isShowSidebar}
             />
-            <section className={'flex flex-col gap-2 h-screen p-10 relative' + (isShowSidebar ? ' w-3/4' : ' w-full')} >
+            <section className={'flex flex-col gap-2 h-full p-10 relative' + (isShowSidebar ? ' w-3/4' : ' w-full')} >
                 <button
                     className="w-fit bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-10"
                     onClick={() => setIsShowSidebar(!isShowSidebar)}>
