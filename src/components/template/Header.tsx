@@ -1,12 +1,10 @@
 import { CurrentCity } from "../geolcation/CurrentCity";
+import { Logo } from "../shared/Logo";
 
-interface HeaderProps {
-  name: string;
-}
-export function Header({ name }: Readonly<HeaderProps>) {
+export function Header() {
   return (
     <header className="flex items-center justify-between bg-gray-900  text-white h-[10vh] px-8 py-6">
-      <h2>Olá, {name}!</h2>
+      <Logo/>
       <CurrentCity />
     </header>
   );

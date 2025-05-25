@@ -9,7 +9,7 @@ export default async function HomePage() {
   }
   return (
     <div className="flex flex-col h-screen">
-      <Header name={session.user?.name ?? ""} />
+      <Header  />
       <main className="p-0 h-[90vh] w-full flex-1  flex flex-col items-center ">
         <GoogleMapNearby session={session} />
       </main>
