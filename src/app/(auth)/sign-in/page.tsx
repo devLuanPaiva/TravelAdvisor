@@ -44,16 +44,16 @@ export default function SignInPage() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-5">
       <div className="bg-white rounded-2xl shadow-xl p-10 w-full max-w-sm text-center">
-        <h1 className="text-2xl font-bold text-center mb-6">{mode === "sign-in" ? "Entrar" : "Registrar"} </h1>
+        <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-center mb-6">{mode === "sign-in" ? "Entrar" : "Registrar"} </h1>
         <GoogleSignIn />
         <div className="relative my-5">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-background px-2 text-muted-foreground">
+            <span className="bg-background px-2 text-muted-foreground text-xs sm:text-sm lg:text-base">
               Ou continue com seu email
             </span>
           </div>
@@ -87,7 +87,7 @@ export default function SignInPage() {
           </Button>
         </form>
         <div className="text-center mt-3">
-          <button onClick={() => setMode(mode === "sign-in" ? "sign-up" : "sign-in")}>
+          <button onClick={() => setMode(mode === "sign-in" ? "sign-up" : "sign-in")} className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 cursor-pointer">
             {mode === "sign-in" ? "Não possui conta? Registrar" : "Já possui conta? Entrar"}
           </button>
         </div>
