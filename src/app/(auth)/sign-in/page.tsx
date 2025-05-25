@@ -4,17 +4,19 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { MotionProgressBar} from "@/components/ui/progress"
 import { GoogleSignIn } from "@/components/auth/GoogleSigIn";
 
 export default function SignInPage() {
   const router = useRouter();
   const [mode, setMode] = useState("sign-in")
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-
+    setIsLoading(true);
     try {
       if (mode === "sign-in") {
         await signIn("credentials", {
@@ -29,7 +31,6 @@ export default function SignInPage() {
           method: "POST",
           body: formData,
         });
-
         const result = await response.json();
 
         if (!response.ok) {
@@ -40,6 +41,10 @@ export default function SignInPage() {
 
     } catch (error) {
       console.error("Login error:", error);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   };
 
@@ -58,6 +63,9 @@ export default function SignInPage() {
             </span>
           </div>
         </div>
+        {isLoading && <MotionProgressBar />}
+
+
         <form className="space-y-4" onSubmit={handleSubmit}>
           {mode === 'sign-up' && (
             <Input

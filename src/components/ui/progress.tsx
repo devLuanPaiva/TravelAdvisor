@@ -1,31 +1,21 @@
-"use client"
+'use client'
+import { motion } from "framer-motion";
 
-import * as React from "react"
-import * as ProgressPrimitive from "@radix-ui/react-progress"
-
-import { cn } from "@/lib/utils"
-
-function Progress({
-  className,
-  value,
-  ...props
-}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+export function MotionProgressBar() {
   return (
-    <ProgressPrimitive.Root
-      data-slot="progress"
-      className={cn(
-        "bg-primary/20 relative h-2 w-full overflow-hidden rounded-full",
-        className
-      )}
-      {...props}
-    >
-      <ProgressPrimitive.Indicator
-        data-slot="progress-indicator"
-        className="bg-primary h-full w-full flex-1 transition-all"
-        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+    <div className="relative w-full h-2 bg-gray-200 rounded overflow-hidden">
+      <motion.div
+        className="absolute top-0 left-0 h-full bg-gray-950 mb-3"
+        initial={{ x: "-100%", width: "99%" }}
+        animate={{
+          x: ["-100%", "100%"],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 1.2,
+          ease: "easeInOut",
+        }}
       />
-    </ProgressPrimitive.Root>
-  )
+    </div>
+  );
 }
-
-export { Progress }
