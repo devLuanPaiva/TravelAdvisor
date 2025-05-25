@@ -1,8 +1,9 @@
 'use client'
-import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
+import user from '@/assets/user.jpg'
 import { IoIosArrowForward, IoIosArrowDown, IoIosLogOut } from "react-icons/io";
 
 const placeTypes = [
@@ -115,7 +116,7 @@ export function PlacesSidebar({ places, selectedType, setSelectedType, isShowSid
 
             <section className="sticky bottom-0 z-20 w-full left-0 py-2 px-4 flex items-center justify-between gap-1 bg-gray-950">
                 <div className="flex items-center gap-2">
-                    <Image src={session.user?.image ?? ''} width={45} height={45} alt="usuário" className="rounded-[5px]" />
+                    <Image src={session.user?.image ?? user} width={45} height={45} alt="usuário" className="rounded-[5px]" />
                     <div className="flex flex-col">
                         <h3 className="text-sm font-bold">Olá, {session.user?.name}!</h3>
                         <p className="text-xs">{session.user?.email} </p>
