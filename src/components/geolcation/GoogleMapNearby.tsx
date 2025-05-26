@@ -4,6 +4,7 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { PlacesSidebar } from "./PlacesSidebar";
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
 import { Session } from "next-auth";
+import Loading from "../shared/Loading";
 
 type Place = google.maps.places.PlaceResult;
 
@@ -64,7 +65,7 @@ export function GoogleMapNearby({ session }: Readonly<GoogleMapNearbyProps>) {
   }, [currentPosition, isLoaded, selectedType]);
 
   if (loadError) return <div>Erro ao carregar o mapa</div>;
-  if (!isLoaded) return <div>Carregando API do Google Maps...</div>;
+  if (!isLoaded) return;
 
   return (
     <section className="flex items-start gap-4 p-0 justify-between w-full h-full">
@@ -112,7 +113,7 @@ export function GoogleMapNearby({ session }: Readonly<GoogleMapNearbyProps>) {
             ))}
           </GoogleMap>
         ) : (
-          <div>Carregando mapa...</div>
+          <Loading message="Carregando..." />
         )}
         {error && <p className="text-red-500 p-4">{error}</p>}
       </section>
