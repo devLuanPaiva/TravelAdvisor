@@ -43,4 +43,10 @@ describe("CurrentCity Component", () => {
             expect(screen.getByText("Natal")).toBeInTheDocument();
         })
     })
+    it("display an error message when geolocation is not supported", async () => {
+        // @ts-ignore
+        delete global.navigator.geolocation;
+        render(<CurrentCity />);
+        expect(await  screen.findByText("Geolocalização não suportada.")).toBeInTheDocument();
+    })
 })
