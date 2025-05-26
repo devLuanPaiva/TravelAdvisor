@@ -47,6 +47,17 @@ describe("CurrentCity Component", () => {
         // @ts-ignore
         delete global.navigator.geolocation;
         render(<CurrentCity />);
-        expect(await  screen.findByText("Geolocalização não suportada.")).toBeInTheDocument();
+        expect(await screen.findByText("Geolocalização não suportada.")).toBeInTheDocument();
+    })
+    it("display an error message if user denies permission", async () => {
+        // @ts-ignore
+        global.navigator.geolocation = {
+            getCurrentPosition: jest.fn((_success, error) => error()),
+        };
+
+        render(<CurrentCity />);
+
+        expect(await screen.findByText("Permissão de localização negada.")).toBeInTheDocument();
+
     })
 })
