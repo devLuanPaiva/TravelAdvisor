@@ -48,9 +48,9 @@ export function PlacesSidebar({
         isShowSidebar ? "block" : "hidden"
       } fixed top-0 left-0 h-full w-[85%] z-20 md:static md:w-1/4 md:z-0 bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white overflow-y-auto border-r border-gray-700 transition-all duration-300 ease-in-out`}
     >
-      <h2 className="text-xl font-semibold mb-4 p-4">
+      <h2 className="text-base md:text-xl font-semibold mb-4 p-4">
         <button
-          className="w-full flex justify-between items-center text-base font-bold text-gray-200 hover:text-white transition-colors duration-200"
+          className="w-full flex justify-between items-center text-sm md:text-base font-bold text-gray-200 hover:text-white transition-colors duration-200"
           onClick={() => setIsTypeOpen(!isTypeOpen)}
         >
           Tipos de Lugar
@@ -67,7 +67,7 @@ export function PlacesSidebar({
           {placeTypes.map((type) => (
             <li key={type.value}>
               <button
-                className={`w-full text-left px-3 py-2 rounded-md transition-colors duration-200 ${
+                className={`w-full text-left px-3 py-2 rounded-md text-sm md:text-base transition-colors duration-200 ${
                   selectedType === type.value
                     ? "bg-blue-600 text-white"
                     : "bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white"
@@ -81,7 +81,7 @@ export function PlacesSidebar({
         </ul>
       )}
 
-      <h3 className="text-lg font-semibold mb-3 text-gray-100 p-4">
+      <h3 className="text-sm md:text-lg font-semibold mb-3 text-gray-100 p-4">
         Resultados próximos
       </h3>
       <section className="space-y-4 flex flex-col items-center p-4">
@@ -99,11 +99,11 @@ export function PlacesSidebar({
                 className="w-full h-40 object-cover rounded mb-2"
               />
             )}
-            <h4 className="font-semibold text-sm text-gray-200">
+            <h4 className="font-semibold text-xs md:text-sm text-gray-200">
               {place.name}
             </h4>
             {place.rating && (
-              <p className="text-yellow-400 text-sm">
+              <p className="text-yellow-400 text-sm md:text-sm">
                 ⭐ {place.rating.toFixed(1)} / 5
               </p>
             )}
@@ -120,7 +120,7 @@ export function PlacesSidebar({
         )}
         {placesWithImages.length > 3 && showAllPlaces && (
           <button
-            className="mt-2 text-blue-400 hover:text-blue-300 transition-colors text-center "
+            className="mt-2 text-blue-400 hover:text-blue-300 transition-colors text-center text-sm md:text-base"
             onClick={() => setShowAllPlaces(false)}
           >
             Mostrar menos
@@ -138,8 +138,10 @@ export function PlacesSidebar({
             className="rounded-[5px]"
           />
           <div className="flex flex-col">
-            <h3 className="text-sm font-bold">Olá, {session.user?.name}!</h3>
-            <p className="text-xs">{session.user?.email} </p>
+            <h3 className="text-sm md:text-base  font-bold">
+              Olá, {session.user?.name}!
+            </h3>
+            <p className="text-xs md:text-sm">{session.user?.email} </p>
           </div>
         </div>
         <button
