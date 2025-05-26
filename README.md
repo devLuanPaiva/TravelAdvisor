@@ -1,23 +1,16 @@
-# 🌍 Travel Advisor · v1.0
+# 🌍 Travel Advisor 
 
 O **Travel Advisor** é uma plataforma inovadora, desenvolvida com **Next.js**, **TypeScript**, **Tailwind CSS**, **Prisma** e **PostgreSQL**, com o objetivo de ajudar usuários a **explorar destinos**, **receber recomendações personalizadas de viagem** e **encontrar atrações, hospedagens e restaurantes** ao redor do mundo.
 
 ## ✅ Status do Projeto
 
-🚧 Versão **1.0** — Em desenvolvimento  
+🚧 Versão **1.5** — Em desenvolvimento  
 ✅ Sistema de autenticação implementado utilizando **NextAuth.js**, com suporte para:
 - Login via **Google**
 - Login via **credentials (email/senha)**
 
+✅ Integração com mapas para exibir locais mais próximos, dando sugestões de restaurantes, bares, postos e etc.
 ---
-
-## ✨ Próximas Funcionalidades
-
-- 🌍 Exploração de destinos com base em localização e preferências
-- 🗺️ Integração com mapas para exibir atrações turísticas
-- 🏨 Listagem de hospedagens recomendadas
-- 🍽️ Sugestões de restaurantes próximos
-- 📌 Sistema de avaliações e favoritos
 
 ---
 
@@ -31,6 +24,7 @@ O **Travel Advisor** é uma plataforma inovadora, desenvolvida com **Next.js**, 
 - [NextAuth.js](https://next-auth.js.org/) (Google & Credentials Providers)
 - [Google Maps API](https://developers.google.com/maps)
 - [RapidAPI](https://rapidapi.com/)
+- [Jest](https://jestjs.io/pt-BR/)
 
 ---
 
