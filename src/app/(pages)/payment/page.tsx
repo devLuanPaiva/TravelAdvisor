@@ -7,5 +7,5 @@ export default async function PaymentPage() {
   if (!session) {
     redirect("/sign-in");
   }
-  return <Payment />;
+  return <Payment session={session}/>;
 }
