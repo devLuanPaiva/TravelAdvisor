@@ -1,21 +1,11 @@
-'use client';
-import { useMercadoPago } from "@/hooks/useMercadoPago";
+import { Payment } from "@/components/payment/Payment";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function PaymentPage() {
-    const { createMercadoPagoCheckout } = useMercadoPago();
-    return (
-        <div className="flex justify-center items-center h-screen">
-            <button
-                onClick={() =>
-                    createMercadoPagoCheckout({
-                        testeId: "123",
-                        userEmail: "loveyuuqr@gmail.com",
-                    })
-                }
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-            >
-                Comprar
-            </button>
-        </div>
-    );
+export default async function PaymentPage() {
+  const session = await getServerSession();
+  if (!session) {
+    redirect("/sign-in");
+  }
+  return <Payment />;
 }
