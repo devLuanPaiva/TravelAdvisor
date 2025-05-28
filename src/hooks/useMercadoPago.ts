@@ -9,7 +9,7 @@ export function useMercadoPago() {
         initMercadoPago(process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY!);
     }, []);
 
-    async function createMercadoPagoCheckout(checkoutData: any) {
+    async function createMercadoPagoCheckout(checkoutData: Record<string, unknown>) {
         try {
             const response = await fetch("/api/mercado-pago/create-checkout", {
                 method: "POST",
