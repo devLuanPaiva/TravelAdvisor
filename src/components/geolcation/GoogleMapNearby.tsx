@@ -1,18 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { PlacesSidebar } from "./PlacesSidebar";
-import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
-import { Session } from "next-auth";
 import Loading from "../shared/Loading";
+import { useEffect, useState } from "react";
+import { PlacesSidebar } from "./PlacesSidebar";
+import { useSession } from "@/contexts/SessionContext";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
 
 type Place = google.maps.places.PlaceResult;
 
-export interface GoogleMapNearbyProps {
-  session: Session;
-}
-
-export function GoogleMapNearby({ session }: Readonly<GoogleMapNearbyProps>) {
+export function GoogleMapNearby() {
+  const { session } = useSession();
   const [places, setPlaces] = useState<Place[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("restaurant");
