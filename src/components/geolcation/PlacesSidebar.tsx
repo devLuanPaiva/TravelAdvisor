@@ -92,11 +92,11 @@ export function PlacesSidebar({
           >
             {place.photos?.[0] && (
               <Image
-                src={place.photos[0].getUrl({ maxWidth: 400 })}
-                width={120}
-                height={100}
+                src={place.photos[0].getUrl({ maxWidth: 1000, maxHeight: 800 })}
+                width={1000}
+                height={1000}
                 alt={place.name ?? "Lugar"}
-                className="w-full h-40 object-cover rounded mb-2"
+                className="w-full aspect-[3/2] object-cover rounded mb-2"
               />
             )}
             <h4 className="font-semibold text-xs md:text-sm text-gray-200">
