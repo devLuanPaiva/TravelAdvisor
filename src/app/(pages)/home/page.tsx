@@ -8,10 +8,8 @@ export default async function HomePage() {
     redirect("/sign-in");
   }
   return (
-    <div className="flex flex-col h-screen">
-      <main className="p-0 h-[90vh] w-full flex-1  flex flex-col items-center ">
-        <GoogleMapNearby session={session} />
-      </main>
-    </div>
+    <main className="p-0 h-[90vh] w-full flex-1  flex flex-col items-center ">
+      <GoogleMapNearby session={session} />
+    </main>
   );
 }
