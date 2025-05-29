@@ -93,8 +93,8 @@ export function PlacesSidebar({
             {place.photos?.[0] && (
               <Image
                 src={place.photos[0].getUrl({ maxWidth: 400 })}
-                width={120}
-                height={100}
+                width={1000}
+                height={1000}
                 alt={place.name ?? "Lugar"}
                 className="w-full h-40 object-cover rounded mb-2"
               />
