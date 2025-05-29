@@ -1,64 +1,60 @@
-"use client";
-import Link from "next/link";
-import { FiLogIn } from "react-icons/fi";
-import { motion } from "framer-motion";
+'use client';
+import {motion} from "framer-motion";
+import image1 from "@/assets/image1.jpg";
+import image2 from "@/assets/image2.jpg";
+import image3 from "@/assets/image3.jpg";
+import { WellCome } from "@/components/landing/WellCome";
+import Image from "next/image";
 export default function Home() {
   return (
-    <main className="flex h-screen w-screen flex-col items-center justify-start bg-zinc-100">
-      <div className="bg-gradient-to-b from-gray-800 via-gray-900 to-black self-end w-[60%] h-[50%] [clip-path:polygon(0%_0%,100%_0%,100%_100%,30%_100%)] flex justify-end">
-        <div className="w-[70%] h-full flex flex-col p-4 justify-end items-end text-white">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="w-full  h-full flex flex-col p-6 justify-between items-end text-white"
-          >
-            <motion.nav
-              initial={{ x: 50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="w-full flex justify-between gap-4 "
-            >
-              <Link href="/sign-in">Acessar</Link>
-              <Link href="/">Voos</Link>
-              <Link href="/">Cidades</Link>
-              <Link href="/">Promocões</Link>
-              <Link href="/">Contato</Link>
-            </motion.nav>
-            <div className="flex flex-col items-end">
-              <motion.h1
-                initial={{ x: 50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="text-5xl  font-bold mb-2 "
-              >
-                Travel Advisor
-              </motion.h1>
-              <motion.p
-                initial={{ x: 50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-lg md:text-xl mb-4 text-gray-300 text-right"
-              >
-                Seu planejador de viagens.
-              </motion.p>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Link
-                  href="/sign-in"
-                  className="inline-flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors px-5 py-2 rounded-full shadow-md"
-                >
-                  <FiLogIn className="text-xl" />
-                  Acessar
-                </Link>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
+    <main className="flex h-screen w-screen items-start justify-between bg-zinc-100">
+      <section className="relative w-[50%] h-full flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: -50, rotate: -15 }}
+          animate={{ opacity: 1, y: 0, rotate: -12 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="absolute top-28 right-56 z-10"
+        >
+          <Image
+            src={image1}
+            alt="image1"
+            width={220}
+            height={300}
+            className="rounded-xl drop-shadow-xl hover:scale-105 transition-transform duration-300"
+          />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 50, rotate: 15 }}
+          animate={{ opacity: 1, y: 0, rotate: 6 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="absolute top-48 right-5 z-20"
+        >
+          <Image
+            src={image2}
+            alt="image2"
+            width={220}
+            height={300}
+            className="rounded-xl drop-shadow-xl hover:scale-105 transition-transform duration-300"
+          />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="absolute bottom-40 right-72 z-0"
+        >
+          <Image
+            src={image3}
+            alt="image3"
+            width={220}
+            height={300}
+            className="rounded-xl drop-shadow-xl hover:scale-105 transition-transform duration-300"
+          />
+        </motion.div>
+      </section>
+      <WellCome/>
     </main>
   );
 }
