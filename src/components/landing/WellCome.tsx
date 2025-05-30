@@ -4,7 +4,7 @@ import { FiLogIn } from "react-icons/fi";
 import { motion } from "framer-motion"
 export function WellCome() {
     return(
-        <section className="bg-gradient-to-b from-gray-800 via-gray-900 to-black  w-[60%] h-[50%] [clip-path:polygon(0%_0%,100%_0%,100%_100%,30%_100%)] flex justify-end">
+        <section className="bg-gradient-to-b from-gray-800 via-gray-900 to-black  w-full h-[50%] [clip-path:polygon(0%_0%,100%_0%,100%_100%,30%_100%)] flex justify-end">
         <div className="w-[70%] h-full flex flex-col p-4 justify-end items-end text-white">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

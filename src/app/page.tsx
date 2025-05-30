@@ -2,6 +2,7 @@ import { Images } from "@/components/landing/Images";
 import logo from "@/assets/blackLogo.png";
 import { WellCome } from "@/components/landing/WellCome";
 import Image from "next/image";
+import { Reviews } from "@/components/landing/Reviews";
 export default function Home() {
   return (
     <main className="flex h-screen w-screen items-start justify-between bg-zinc-100">
@@ -17,7 +18,10 @@ export default function Home() {
         </div>
         <Images />
       </section>
-      <WellCome />
+      <section className="flex flex-col items-end justify-between w-[60%] h-full">
+        <WellCome />
+        <Reviews />
+      </section>
     </main>
   );
 }
