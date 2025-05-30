@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { reviews } from "@/constants/reviews";
 import { cn } from "@/lib/utils";
 import { AiFillStar } from "react-icons/ai";
+import Image from "next/image";
 
 export function Reviews() {
   return (
@@ -19,7 +20,7 @@ export function Reviews() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          {reviews.map((review, i) => (
+          {reviews.map((review) => (
             <motion.div
               key={review.id}
               className={cn(
@@ -30,7 +31,7 @@ export function Reviews() {
               transition={{ type: "spring", stiffness: 200 }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <img
+                <Image
                   src={review.userImage}
                   alt={review.username}
                   className="w-12 h-12 rounded-full object-cover"
