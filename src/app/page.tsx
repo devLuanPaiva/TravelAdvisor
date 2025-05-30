@@ -5,8 +5,8 @@ import Image from "next/image";
 import { Reviews } from "@/components/landing/Reviews";
 export default function Home() {
   return (
-    <main className="flex h-screen w-screen items-start justify-between bg-zinc-100">
-      <section className="w-[50%] h-full flex flex-col items-center justify-between relative">
+    <main className="flex flex-col md:flex-row h-screen w-screen items-start justify-between bg-zinc-100">
+      <section className="hidden md:flex w-[50%] h-full flex-col items-center justify-between relative">
         <div className="w-full  flex items-center justify-start p-3 px-5">
           <Image
             src={logo}
@@ -18,7 +18,7 @@ export default function Home() {
         </div>
         <Images />
       </section>
-      <section className="flex flex-col items-end justify-between w-[60%] h-full">
+      <section className="flex flex-col items-end justify-between w-full md:w-[60%] md:h-full">
         <WellCome />
         <Reviews />
       </section>

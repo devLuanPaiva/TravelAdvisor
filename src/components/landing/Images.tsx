@@ -6,12 +6,12 @@ import image3 from "@/assets/image3.jpg";
 import Image from "next/image";
 export function Images() {
   return (
-    <section>
+    <section className="hidden md:block">
       <motion.div
         initial={{ opacity: 0, y: -50, rotate: -15 }}
         animate={{ opacity: 1, y: 0, rotate: -12 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="absolute top-28 right-56 z-10"
+        className=" absolute top-28 right-56 z-10"
       >
         <Image
           src={image1}
