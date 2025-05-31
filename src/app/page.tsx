@@ -5,9 +5,9 @@ import Image from "next/image";
 import { Reviews } from "@/components/landing/Reviews";
 export default function Home() {
   return (
-    <main className="flex flex-col md:flex-row h-screen w-screen items-start justify-between bg-zinc-100">
-      <section className="hidden md:flex w-[50%] h-full flex-col items-center justify-between relative">
-        <div className="w-full  flex items-center justify-start p-3 px-5">
+    <main className="flex flex-col-reverse md:flex-row min-h-screen md:h-screen w-screen items-start justify-between bg-zinc-100">
+      <section className="flex w-full min-h-[600px]  md:w-[50%]  md:h-full flex-col items-center justify-between relative">
+        <div className="hidden md:flex w-full  items-center justify-start p-3 px-5">
           <Image
             src={logo}
             alt="logo"

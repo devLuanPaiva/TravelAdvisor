@@ -6,7 +6,7 @@ import image3 from "@/assets/image3.jpg";
 import Image from "next/image";
 export function Images() {
   return (
-    <section className="hidden md:block">
+    <section>
       <motion.div
         initial={{ opacity: 0, y: -50, rotate: -15 }}
         animate={{ opacity: 1, y: 0, rotate: -12 }}
