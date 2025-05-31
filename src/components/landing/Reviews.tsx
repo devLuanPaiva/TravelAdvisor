@@ -40,7 +40,7 @@ export function Reviews() {
   return (
     <section className="w-full py-10 ">
       <div className="w-full mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6">
+        <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
           O que dizem nossos viajantes
         </h2>
 
@@ -54,7 +54,7 @@ export function Reviews() {
             <motion.div
               key={review.id}
               className={cn(
-                "mx-auto min-w-[250px] max-w-[280px] bg-white shadow-md rounded-[10px] p-4",
+                "mx-auto w-[90%] md:min-w-[250px] max-w-full md:max-w-[280px] bg-white shadow-md rounded-[10px] p-4",
                 "flex flex-col justify-between"
               )}
               whileHover={{ scale: 1.05 }}
