@@ -18,7 +18,7 @@ export default function Home() {
         </div>
         <Images />
       </section>
-      <section className="flex flex-col items-end justify-between w-full md:w-[60%] md:h-full">
+      <section className="flex flex-col items-center md:items-end justify-start md:justify-between w-full md:w-[60%] md:h-full">
         <WellCome />
         <Reviews />
       </section>

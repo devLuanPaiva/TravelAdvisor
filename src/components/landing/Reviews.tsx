@@ -54,7 +54,7 @@ export function Reviews() {
             <motion.div
               key={review.id}
               className={cn(
-                "min-w-[250px] max-w-[280px] bg-white shadow-md rounded-[10px] p-4",
+                "mx-auto min-w-[250px] max-w-[280px] bg-white shadow-md rounded-[10px] p-4",
                 "flex flex-col justify-between"
               )}
               whileHover={{ scale: 1.05 }}
