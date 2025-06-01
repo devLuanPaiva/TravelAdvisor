@@ -44,7 +44,11 @@ export function Payment({ session }: Readonly<{ session: Session }>) {
                 })
               }
             >
-              Comprar por R$ {plan.price.toFixed(2)}
+              Comprar por R${" "}
+              {plan.price.toLocaleString("pt-br", {
+                style: "currency",
+                currency: "BRL",
+              })}
             </Button>
           </div>
         </motion.article>
