@@ -19,8 +19,8 @@ export function Reviews() {
   useEffect(() => {
     const updateColumns = () => {
       const width = window.innerWidth;
-      if (width >= 768) setColumns(3);
-      else if (width >= 640) setColumns(2);
+      if (width >= 1280) setColumns(3);
+      else if (width >= 1024) setColumns(2);
       else setColumns(1);
     };
 
@@ -45,7 +45,7 @@ export function Reviews() {
         </h2>
 
         <motion.div
-          className="w-full mx-auto gap-4 mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
+          className="w-full mx-auto gap-4 mt-8 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}

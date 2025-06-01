@@ -12,7 +12,7 @@ export function Images() {
         initial={{ opacity: 0, y: -50, rotate: -15 }}
         animate={{ opacity: 1, y: 0, rotate: -12 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="absolute top-20 right-10 md:right-56 z-10 w-32 sm:w-40 md:w-52 lg:w-56"
+        className="absolute top-20 right-36 min-[450px]:right-72 md:right-56 z-10 w-32 sm:w-40 md:w-52 lg:w-56"
       >
         <Image
           src={image1}
@@ -26,7 +26,7 @@ export function Images() {
         initial={{ opacity: 0, y: 50, rotate: 15 }}
         animate={{ opacity: 1, y: 0, rotate: 6 }}
         transition={{ duration: 0.8, delay: 0.4 }}
-        className="absolute top-40 right-2 md:right-5 z-20 w-32 sm:w-40 md:w-52 lg:w-56"
+        className="absolute top-40 right-10 min-[450px]:right-36 md:right-5 z-20 w-32 sm:w-40 md:w-52 lg:w-56"
       >
         <Image
           src={image2}
@@ -40,7 +40,7 @@ export function Images() {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="absolute bottom-20 right-10 md:right-72 z-0 w-32 sm:w-40 md:w-52 lg:w-56"
+        className="absolute bottom-28 right-40 min-[450px]:right-72 md:right-72 z-0 w-32 sm:w-40 md:w-52 lg:w-56"
       >
         <Image
           src={image3}
