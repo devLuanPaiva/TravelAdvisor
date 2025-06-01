@@ -1,4 +1,7 @@
 import { IPlans } from "@/interfaces/IPlans.interface";
+import noronhaImg from "@/assets/plans/noronha.jpg"
+import patagoniaImg from "@/assets/plans/patagonia.jpg"
+import parisImg from "@/assets/plans/paris.jpg"
 
 export const travelPlans: IPlans[] = [
     {
@@ -6,21 +9,21 @@ export const travelPlans: IPlans[] = [
         name: "Paraíso em Fernando de Noronha",
         price: 2999.90,
         description: "Pacote completo com mergulho, trilhas e praias paradisíacas.",
-        image: "https://example.com/images/noronha.jpg"
+        image: noronhaImg.src
     },
     {
         id: 2,
         name: "Aventura na Patagônia",
         price: 4599.00,
         description: "Explore montanhas, geleiras e a fauna do sul da América.",
-        image: "https://example.com/images/patagonia.jpg"
+        image: patagoniaImg.src
     },
     {
         id: 3,
         name: "Romance em Paris",
         price: 7999.99,
         description: "Hospedagem, passeios e jantar com vista para a Torre Eiffel.",
-        image: "https://example.com/images/paris.jpg"
+        image: parisImg.src
     },
     {
         id: 4,
