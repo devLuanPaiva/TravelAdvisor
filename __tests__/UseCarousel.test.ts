@@ -35,4 +35,12 @@ describe("UseCarousel", () => {
 
         expect(result.current.current).toBe(1)
     })
+    it("should go to the previous one manually with handlePrev()", () => {
+        const { result } = renderHook(() => useCarousel({ elements, intervalTime: 1000 }))
+        act(() => {
+            result.current.handlePrev()
+        })
+
+        expect(result.current.current).toBe(2)
+    })
 })
