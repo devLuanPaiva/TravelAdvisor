@@ -4,7 +4,7 @@ O **Travel Advisor** é uma plataforma inovadora, desenvolvida com **Next.js**, 
 
 ## ✅ Status do Projeto
 
-🚧 Versão **2.0** — Em desenvolvimento  
+🚧 Versão **2.5** — Em desenvolvimento  
 ✅ Sistema de autenticação implementado utilizando **NextAuth.js**, com suporte para:
 
 - Login via **Google**
