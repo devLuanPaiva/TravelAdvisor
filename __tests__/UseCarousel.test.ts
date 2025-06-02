@@ -1,5 +1,5 @@
 import { useCarousel } from "@/hooks/useCarousel";
-import { renderHook } from "@testing-library/react";
+import { renderHook, act } from "@testing-library/react";
 
 jest.useFakeTimers()
 
@@ -8,6 +8,23 @@ describe("UseCarousel", () => {
 
     it("should start with the first element", () => {
         const { result } = renderHook(() => useCarousel({ elements, intervalTime: 1000 }))
+        expect(result.current.current).toBe(0)
+    })
+    it("should change the current element every interval time", () => {
+        const { result } = renderHook(() => useCarousel({ elements, intervalTime: 1000 }))
+        act(() => {
+            jest.advanceTimersByTime(1000)
+        })
+        expect(result.current.current).toBe(1)
+
+        act(() => {
+            jest.advanceTimersByTime(1000)
+        })
+        expect(result.current.current).toBe(2)
+
+        act(() => {
+            jest.advanceTimersByTime(1000)
+        })
         expect(result.current.current).toBe(0)
     })
 })
