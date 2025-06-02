@@ -43,4 +43,11 @@ describe("UseCarousel", () => {
 
         expect(result.current.current).toBe(2)
     })
+    it("should allow to manually set the index", () => {
+        const { result } = renderHook(() => useCarousel({ elements, intervalTime: 1000 }))
+        act(() => {
+            result.current.setCurrent(1)
+        })
+        expect(result.current.current).toBe(1)
+    })
 })
