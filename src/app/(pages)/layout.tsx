@@ -1,4 +1,5 @@
 import Loading from "@/components/shared/Loading";
+import { Footer } from "@/components/template/Footer";
 import { Header } from "@/components/template/Header";
 import { Suspense } from "react";
 
@@ -10,6 +11,7 @@ export default function Layout({
       <Suspense fallback={<Loading message="Carregando..." />}>
         <Header />
         {children}
+        <Footer />
       </Suspense>
     </div>
   );

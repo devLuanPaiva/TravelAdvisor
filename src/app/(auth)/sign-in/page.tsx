@@ -4,12 +4,14 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MotionProgressBar} from "@/components/ui/progress"
+import logo from "@/assets/blackLogo.png";
+import { MotionProgressBar } from "@/components/ui/progress";
 import { GoogleSignIn } from "@/components/auth/GoogleSigIn";
+import Image from "next/image";
 
 export default function SignInPage() {
   const router = useRouter();
-  const [mode, setMode] = useState("sign-in")
+  const [mode, setMode] = useState("sign-in");
   const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,7 +27,6 @@ export default function SignInPage() {
           redirect: false,
         });
         router.push("/home");
-
       } else if (mode === "sign-up") {
         const response = await fetch("/api/sign-up", {
           method: "POST",
@@ -38,7 +39,6 @@ export default function SignInPage() {
         }
         setMode("sign-in");
       }
-
     } catch (error) {
       console.error("Login error:", error);
     } finally {
@@ -51,7 +51,18 @@ export default function SignInPage() {
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-5">
       <div className="bg-white rounded-2xl shadow-xl p-10 w-full max-w-sm text-center">
-        <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-center mb-6">{mode === "sign-in" ? "Entrar" : "Registrar"} </h1>
+        <header className="w-full flex justify-between">
+          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-center mb-6 self-center">
+            {mode === "sign-in" ? "Entrar" : "Registrar"}{" "}
+          </h1>
+          <Image
+            src={logo}
+            alt="logo"
+            width={200}
+            height={100}
+            className="h-10 w-10"
+          />
+        </header>
         <GoogleSignIn />
         <div className="relative my-5">
           <div className="absolute inset-0 flex items-center">
@@ -65,9 +76,8 @@ export default function SignInPage() {
         </div>
         {isLoading && <MotionProgressBar />}
 
-
         <form className="space-y-4" onSubmit={handleSubmit}>
-          {mode === 'sign-up' && (
+          {mode === "sign-up" && (
             <Input
               name="name"
               placeholder="Nome"
@@ -95,8 +105,13 @@ export default function SignInPage() {
           </Button>
         </form>
         <div className="text-center mt-3">
-          <button onClick={() => setMode(mode === "sign-in" ? "sign-up" : "sign-in")} className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 cursor-pointer">
-            {mode === "sign-in" ? "Não possui conta? Registrar" : "Já possui conta? Entrar"}
+          <button
+            onClick={() => setMode(mode === "sign-in" ? "sign-up" : "sign-in")}
+            className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 cursor-pointer"
+          >
+            {mode === "sign-in"
+              ? "Não possui conta? Registrar"
+              : "Já possui conta? Entrar"}
           </button>
         </div>
       </div>
