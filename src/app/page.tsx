@@ -7,7 +7,7 @@ import { Footer } from "@/components/template/Footer";
 export default function Home() {
   return (
     <>
-      <main className="flex flex-col-reverse md:flex-row min-h-screen md:h-screen w-screen items-start justify-between bg-zinc-100">
+      <main className="flex flex-col-reverse md:flex-row min-h-screen md:h-screen  max-w-screen items-start justify-between bg-zinc-100 " >
         <section className="flex w-full min-h-[600px]  md:w-[50%]  md:h-full flex-col items-center justify-between relative">
           <div className="hidden md:flex w-full  items-center justify-start p-3 px-5">
             <Image
