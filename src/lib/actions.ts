@@ -65,7 +65,17 @@ const requestPasswordReset = async (email: string) => {
         successMessage: "If an account exists with this email, you'll receive a password reset link"
     });
 };
-const resetPassword = async (token: string, newPassword: string) => {
+const resetPassword = async (prevState: unknown, formData: FormData) => {
+    const token = formData.get("token")?.toString();
+    const newPassword = formData.get("newPassword")?.toString();
+
+    if (!token || !newPassword) {
+        return {
+            success: false,
+            message: "Token and new password are required",
+        };
+    }
+
     return executeAction({
         actionFn: async () => {
             const user = await db.user.findFirst({
@@ -93,6 +103,7 @@ const resetPassword = async (token: string, newPassword: string) => {
             return { success: true };
         },
         successMessage: "Password updated successfully"
-    })
-}
+    });
+};
+
 export { signUp, requestPasswordReset, resetPassword };
