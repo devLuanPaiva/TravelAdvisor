@@ -1,5 +1,7 @@
-import { schema } from "@/lib/schema";
 import db from "@/lib/db/db";
+import { v4 as uuidv4 } from 'uuid';
+import { addHours } from 'date-fns';
+import { schema } from "@/lib/schema";
 import executeAction from "./executeAction";
 
 const signUp = async (formData: FormData) => {
@@ -36,5 +38,61 @@ const signUp = async (formData: FormData) => {
         successMessage: "Signed up successfully",
     });
 };
+const requestPasswordReset = async (email: string) => {
+    return executeAction({
+        actionFn: async () => {
+            const user = await db.user.findUnique({
+                where: { email: email.toLowerCase() }
+            });
 
-export { signUp };
+            if (!user) {
+                throw new Error("No user found with this email");
+            }
+
+            const resetToken = uuidv4();
+            const resetTokenExpiry = addHours(new Date(), 1);
+
+            await db.user.update({
+                where: { email: email.toLowerCase() },
+                data: {
+                    resetToken,
+                    resetTokenExpiry
+                }
+            });
+
+            return { email: user.email };
+        },
+        successMessage: "If an account exists with this email, you'll receive a password reset link"
+    });
+};
+const resetPassword = async (token: string, newPassword: string) => {
+    return executeAction({
+        actionFn: async () => {
+            const user = await db.user.findFirst({
+                where: {
+                    resetToken: token,
+                    resetTokenExpiry: { gt: new Date() }
+                }
+            });
+
+            if (!user) {
+                throw new Error("Invalid or expired token");
+            }
+
+            const validatedPassword = schema.parse({ password: newPassword }).password;
+
+            await db.user.update({
+                where: { id: user.id },
+                data: {
+                    password: validatedPassword,
+                    resetToken: null,
+                    resetTokenExpiry: null
+                }
+            });
+
+            return { success: true };
+        },
+        successMessage: "Password updated successfully"
+    })
+}
+export { signUp, requestPasswordReset, resetPassword };
