@@ -3,8 +3,14 @@
 import { requestPasswordReset } from "@/lib/actions";
 import { useFormState } from "react-dom";
 
+const requestPasswordResetWithForm = async (prevState: unknown, formData: FormData) => {
+  const emailValue = formData.get("email");
+  const email = typeof emailValue === "string" ? emailValue : "";
+  return await requestPasswordReset(email);
+};
+
 export default function ForgotPasswordPage() {
-  const [state, formAction] = useFormState(requestPasswordReset, null);
+  const [state, formAction] = useFormState(requestPasswordResetWithForm, null);
 
   return (
     <div className="max-w-md mx-auto p-6">
