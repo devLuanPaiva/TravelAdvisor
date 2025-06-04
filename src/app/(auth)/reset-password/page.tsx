@@ -3,8 +3,9 @@
 import { resetPassword } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const [state, formAction] = useFormState(resetPassword, null);
@@ -52,5 +53,13 @@ export default function ResetPasswordPage() {
         )}
       </form>
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordForm />
+    </Suspense>
   );
 }
