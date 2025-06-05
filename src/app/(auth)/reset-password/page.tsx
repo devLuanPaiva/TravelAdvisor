@@ -1,14 +1,12 @@
 "use client";
-
 import { resetPassword } from "@/lib/actions";
-import { useFormState } from "react-dom";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 
 function ResetPasswordForm() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-  const [state, formAction] = useFormState(resetPassword, null);
+  const [state, formAction] = React.useActionState(resetPassword, null);
 
   if (!token) {
     return (
