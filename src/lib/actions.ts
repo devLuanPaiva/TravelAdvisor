@@ -1,3 +1,4 @@
+'use server';
 import db from "@/lib/db/db";
 import { v4 as uuidv4 } from 'uuid';
 import { addHours } from 'date-fns';
