@@ -1,7 +1,11 @@
 "use client";
-
-import { requestPasswordReset } from "@/lib/actions";
+import Image from "next/image";
 import { useActionState } from "react";
+import logo from "@/assets/blackLogo.png";
+import { requestPasswordReset } from "@/lib/actions";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const requestPasswordResetWithForm = async (
   prevState: unknown,
@@ -19,37 +23,44 @@ export default function ForgotPasswordPage() {
   );
 
   return (
-    <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Forgot Password</h1>
-      <form action={formAction} className="space-y-4">
-        <div>
-          <label htmlFor="email" className="block mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            className="w-full px-3 py-2 border rounded"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-        >
-          Send Reset Link
-        </button>
+    <section className="h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-5">
+      <article className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-sm text-center">
+        <header className="w-full flex flex-col items-center mb-6">
+          <div className="w-full flex justify-center mb-4 space-x-2.5 gap-2.5">
+            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-left">
+              Recuperação de Senha
+            </h1>
+            <Image
+              src={logo}
+              alt="logo"
+              width={200}
+              height={100}
+              className="h-10 w-10"
+            />
+          </div>
+          <p className="text-gray-600 text-sm text-center">Informe seu email abaixo para recuperar sua senha</p>
+        </header>
+        <form action={formAction} className="space-y-4 w-full">
+            <Input
+              name="email"
+              placeholder="Email"
+              type="email"
+              required
+              autoComplete="email"
+            />
+          
+          <Button type="submit" className="w-full">Enviar</Button>
+        </form>
+        <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
         {state?.message && (
           <p
-            className={`mt-4 ${
-              state.success ? "text-green-500" : "text-red-500"
-            }`}
+            className={`mt-4 ${state.success ? "text-green-500" : "text-red-500"
+              }`}
           >
             {state.message}
           </p>
         )}
-      </form>
-    </div>
+      </article>
+    </section>
   );
 }

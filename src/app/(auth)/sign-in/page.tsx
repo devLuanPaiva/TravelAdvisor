@@ -50,7 +50,7 @@ export default function SignInPage() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-5">
+    <section className="h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-5">
       <div className="bg-white rounded-2xl shadow-xl p-10 w-full max-w-sm text-center">
         <header className="w-full flex justify-between">
           <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-center mb-6 self-center">
