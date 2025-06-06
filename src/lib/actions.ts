@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { addHours } from 'date-fns';
 import { schema } from "@/lib/schema";
 import executeAction from "./executeAction";
+import { resend } from "./email/resend";
 
 const signUp = async (formData: FormData) => {
     return executeAction({
@@ -60,6 +61,18 @@ const requestPasswordReset = async (email: string) => {
                     resetTokenExpiry
                 }
             });
+            const resetLink = `${process.env.NEXTAUTH_URL}/reset-password?token=${resetToken}`;
+            await resend.emails.send({
+                from: 'onboarding@traveladvisor.com',
+                to: email ?? '',
+                subject: 'Redefinição de senha',
+                html: `
+                    <p>Olá, ${user.name ?? "usuário"}!</p>
+                    <p>Você solicitou a redefinição de senha. Clique no link abaixo para continuar:</p>
+                    <p><a href="${resetLink}">Redefinir Senha</a></p>
+                    <p>Este link expira em 1 hora.</p>
+                `
+            })
 
             return { email: user.email };
         },
