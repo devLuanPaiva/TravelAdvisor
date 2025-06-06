@@ -63,7 +63,7 @@ const requestPasswordReset = async (email: string) => {
             });
             const resetLink = `${process.env.NEXTAUTH_URL}/reset-password?token=${resetToken}`;
             await resend.emails.send({
-                from: 'onboarding@traveladvisor.com',
+                from: 'travel@traveladvisor.site',
                 to: email ?? '',
                 subject: 'Redefinição de senha',
                 html: `
