@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
         <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
         {state?.message && (
           <p
-            className={`mt-4 ${state.success ? "text-green-500" : "text-red-500"
+            className={`mt-4 font-semibold text-xs ${state.success ? "text-green-500" : "text-red-500"
               }`}
           >
             {state.message}
