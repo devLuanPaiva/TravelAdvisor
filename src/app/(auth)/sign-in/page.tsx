@@ -8,6 +8,7 @@ import logo from "@/assets/blackLogo.png";
 import { MotionProgressBar } from "@/components/ui/progress";
 import { GoogleSignIn } from "@/components/auth/GoogleSigIn";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -49,7 +50,7 @@ export default function SignInPage() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-5">
+    <section className="h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-5">
       <div className="bg-white rounded-2xl shadow-xl p-10 w-full max-w-sm text-center">
         <header className="w-full flex justify-between">
           <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-center mb-6 self-center">
@@ -76,7 +77,7 @@ export default function SignInPage() {
         </div>
         {isLoading && <MotionProgressBar />}
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-4 w-full flex flex-col items-center pb-6" onSubmit={handleSubmit}>
           {mode === "sign-up" && (
             <Input
               name="name"
@@ -100,6 +101,7 @@ export default function SignInPage() {
             required
             autoComplete="current-password"
           />
+          <Link href="/forgot-password" className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 self-end text-right">Esqueci minha senha</Link>
           <Button className="w-full" type="submit">
             {mode === "sign-in" ? "Entrar" : "Registrar-se"}
           </Button>
