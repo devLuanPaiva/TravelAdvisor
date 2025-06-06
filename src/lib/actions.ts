@@ -137,7 +137,7 @@ const resetPassword = async (prevState: unknown, formData: FormData) => {
                 throw new Error("Token inválido ou expirado.");
             }
 
-            const validatedPassword = schema.parse({ password: newPassword }).password;
+            const validatedPassword = schema.parse({email: user.email, password: newPassword }).password;
 
             await db.user.update({
                 where: { id: user.id },
