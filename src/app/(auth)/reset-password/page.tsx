@@ -33,8 +33,9 @@ function ResetPasswordForm() {
           </div>
         </header>
         <form action={formAction} className="space-y-4 w-full">
+          <input type="hidden" name="token" value={token ?? ""} />
           <Input
-            name="password"
+            name="newPassword"
             placeholder="Nova Senha"
             type="password"
             required
