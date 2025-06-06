@@ -14,7 +14,7 @@ const signUp = async (formData: FormData) => {
             const password = formData.get("password")?.toString();
 
             if (!email || !password) {
-                throw new Error("Email and password are required");
+                throw new Error("Email e senha são obrigatórios");
             }
 
             const validatedData = schema.parse({ email, password });
@@ -24,7 +24,7 @@ const signUp = async (formData: FormData) => {
             });
 
             if (existingUser) {
-                throw new Error("User already exists");
+                throw new Error("Usuário não existe");
             }
 
             const newUser = await db.user.create({
@@ -37,7 +37,7 @@ const signUp = async (formData: FormData) => {
 
             return newUser;
         },
-        successMessage: "Signed up successfully",
+        successMessage: "Cadastrado com sucesso",
     });
 };
 const requestPasswordReset = async (email: string) => {
@@ -48,7 +48,7 @@ const requestPasswordReset = async (email: string) => {
             });
 
             if (!user) {
-                throw new Error("No user found with this email");
+                throw new Error("Não existe usuário com este email");
             }
 
             const resetToken = uuidv4();
@@ -110,7 +110,7 @@ const requestPasswordReset = async (email: string) => {
 
             return { email: user.email };
         },
-        successMessage: "If an account exists with this email, you'll receive a password reset link"
+        successMessage: "Se existe um usuário com esse email, um link de redefinição de senha foi enviado para ele.",
     });
 };
 const resetPassword = async (prevState: unknown, formData: FormData) => {
@@ -120,7 +120,7 @@ const resetPassword = async (prevState: unknown, formData: FormData) => {
     if (!token || !newPassword) {
         return {
             success: false,
-            message: "Token and new password are required",
+            message: "Token e senha obrigatórios",
         };
     }
 
@@ -134,7 +134,7 @@ const resetPassword = async (prevState: unknown, formData: FormData) => {
             });
 
             if (!user) {
-                throw new Error("Invalid or expired token");
+                throw new Error("Token inválido ou expirado.");
             }
 
             const validatedPassword = schema.parse({ password: newPassword }).password;
@@ -150,7 +150,7 @@ const resetPassword = async (prevState: unknown, formData: FormData) => {
 
             return { success: true };
         },
-        successMessage: "Password updated successfully"
+        successMessage: "Senha redefinida com sucesso",
     });
 };
 
