@@ -13,6 +13,9 @@ export default function SignInPage() {
   const router = useRouter();
   const [mode, setMode] = useState("sign-in");
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -21,27 +24,43 @@ export default function SignInPage() {
     setIsLoading(true);
     try {
       if (mode === "sign-in") {
-        await signIn("credentials", {
+        const res = await signIn("credentials", {
           email,
           password,
           redirect: false,
         });
+
+        if (res?.error) {
+          throw new Error(res.error);
+        }
         router.push("/home");
       } else if (mode === "sign-up") {
         const response = await fetch("/api/sign-up", {
           method: "POST",
           body: formData,
         });
+
         const result = await response.json();
 
-        if (!response.ok) {
-          throw new Error(result.message ?? "Erro ao registrar");
+        if (!result.success) {
+          setMessage(result.message);
+          setMessageType("error");
+          return;
         }
+
+        setMessage("Usuário registrado com sucesso");
+        setMessageType("success");
         setMode("sign-in");
       }
-    } catch (error) {
-      console.error("Login error:", error);
-    } finally {
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage(error.message || "Erro inesperado");
+      } else {
+        setMessage("Erro inesperado");
+      }
+      setMessageType("error");
+    }
+    finally {
       setTimeout(() => {
         setIsLoading(false);
       }, 500);
@@ -50,7 +69,7 @@ export default function SignInPage() {
 
   return (
     <AuthSection title={mode === "sign-in" ? "Entrar" : "Registrar-se"}
->
+    >
       <GoogleSignIn />
       <div className="relative my-5">
         <div className="absolute inset-0 flex items-center">
@@ -93,7 +112,7 @@ export default function SignInPage() {
           {mode === "sign-in" ? "Entrar" : "Registrar-se"}
         </Button>
       </form>
-      <div className="text-center mt-3">
+      <div className="text-center">
         <button
           onClick={() => setMode(mode === "sign-in" ? "sign-up" : "sign-in")}
           className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 cursor-pointer"
@@ -103,6 +122,17 @@ export default function SignInPage() {
             : "Já possui conta? Entrar"}
         </button>
       </div>
+      {message && (
+        <div
+          className={`w-full mt-4 text-center text-xs p-2 rounded-md font-semibold ${messageType === "success"
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
+            }`}
+        >
+          {message}
+        </div>
+      )}
+
     </AuthSection>
   );
 }
