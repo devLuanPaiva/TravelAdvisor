@@ -1,12 +1,11 @@
 "use client";
-import Image from "next/image";
-import React, { Suspense } from "react";
-import logo from "@/assets/blackLogo.png";
-import { resetPassword } from "@/lib/actions";
-import { useSearchParams } from "next/navigation";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import React, { Suspense } from "react";
+import { Input } from "@/components/ui/input";
+import { resetPassword } from "@/lib/actions";
+import { Button } from "@/components/ui/button";
+import { useSearchParams } from "next/navigation";
+import { AuthSection } from "@/components/template/AuthSection";
 
 function ResetPasswordForm() {
   const searchParams = useSearchParams();
@@ -16,45 +15,29 @@ function ResetPasswordForm() {
   if (!token) return null
 
   return (
-    <section className="h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-5">
-      <article className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-sm text-center">
-        <header className="w-full flex flex-col items-center mb-6">
-          <div className="w-full flex justify-center mb-4 space-x-2.5 gap-2.5">
-            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-left">
-              Recuperação de Senha
-            </h1>
-            <Image
-              src={logo}
-              alt="logo"
-              width={200}
-              height={100}
-              className="h-10 w-10"
-            />
-          </div>
-        </header>
-        <form action={formAction} className="space-y-4 w-full">
-          <input type="hidden" name="token" value={token ?? ""} />
-          <Input
-            name="newPassword"
-            placeholder="Nova Senha"
-            type="password"
-            required
-            autoComplete="password"
-          />
+    <AuthSection title="Recuperar Senha" description="Informe sua nova senha abaixo">
+      <form action={formAction} className="space-y-4 w-full">
+        <input type="hidden" name="token" value={token ?? ""} />
+        <Input
+          name="newPassword"
+          placeholder="Nova Senha"
+          type="password"
+          required
+          autoComplete="password"
+        />
 
-          <Button type="submit" className="w-full">Enviar</Button>
-        </form>
-        <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
-        {state?.message && (
-          <p
-            className={`mt-4 font-semibold text-xs ${state.success ? "text-green-500" : "text-red-500"
-              }`}
-          >
-            {state.message}
-          </p>
-        )}
-      </article>
-    </section>
+        <Button type="submit" className="w-full">Enviar</Button>
+      </form>
+      <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
+      {state?.message && (
+        <p
+          className={`mt-4 font-semibold text-xs ${state.success ? "text-green-500" : "text-red-500"
+            }`}
+        >
+          {state.message}
+        </p>
+      )}
+    </AuthSection>
   );
 }
 

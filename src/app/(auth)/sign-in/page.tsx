@@ -1,14 +1,13 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/blackLogo.png";
-import { MotionProgressBar } from "@/components/ui/progress";
 import { GoogleSignIn } from "@/components/auth/GoogleSigIn";
-import Image from "next/image";
-import Link from "next/link";
+import { MotionProgressBar } from "@/components/ui/progress";
+import { AuthSection } from "@/components/template/AuthSection";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -50,73 +49,60 @@ export default function SignInPage() {
   };
 
   return (
-    <section className="h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-5">
-      <div className="bg-white rounded-2xl shadow-xl p-10 w-full max-w-sm text-center">
-        <header className="w-full flex justify-between">
-          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-center mb-6 self-center">
-            {mode === "sign-in" ? "Entrar" : "Registrar"}{" "}
-          </h1>
-          <Image
-            src={logo}
-            alt="logo"
-            width={200}
-            height={100}
-            className="h-10 w-10"
-          />
-        </header>
-        <GoogleSignIn />
-        <div className="relative my-5">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="bg-background px-2 text-muted-foreground text-xs sm:text-sm lg:text-base">
-              Ou continue com seu email
-            </span>
-          </div>
+    <AuthSection title={mode === "sign-in" ? "Entrar" : "Registrar-se"}
+>
+      <GoogleSignIn />
+      <div className="relative my-5">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
         </div>
-        {isLoading && <MotionProgressBar />}
-
-        <form className="space-y-4 w-full flex flex-col items-center pb-6" onSubmit={handleSubmit}>
-          {mode === "sign-up" && (
-            <Input
-              name="name"
-              placeholder="Nome"
-              type="text"
-              required
-              autoComplete="name"
-            />
-          )}
-          <Input
-            name="email"
-            placeholder="Email"
-            type="email"
-            required
-            autoComplete="email"
-          />
-          <Input
-            name="password"
-            placeholder="Password"
-            type="password"
-            required
-            autoComplete="current-password"
-          />
-          <Link href="/forgot-password" className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 self-end text-right">Esqueci minha senha</Link>
-          <Button className="w-full" type="submit">
-            {mode === "sign-in" ? "Entrar" : "Registrar-se"}
-          </Button>
-        </form>
-        <div className="text-center mt-3">
-          <button
-            onClick={() => setMode(mode === "sign-in" ? "sign-up" : "sign-in")}
-            className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 cursor-pointer"
-          >
-            {mode === "sign-in"
-              ? "Não possui conta? Registrar"
-              : "Já possui conta? Entrar"}
-          </button>
+        <div className="relative flex justify-center text-sm">
+          <span className="bg-background px-2 text-muted-foreground text-xs sm:text-sm lg:text-base">
+            Ou continue com seu email
+          </span>
         </div>
       </div>
-    </section>
+      {isLoading && <MotionProgressBar />}
+
+      <form className="space-y-4 w-full flex flex-col items-center pb-6" onSubmit={handleSubmit}>
+        {mode === "sign-up" && (
+          <Input
+            name="name"
+            placeholder="Nome"
+            type="text"
+            required
+            autoComplete="name"
+          />
+        )}
+        <Input
+          name="email"
+          placeholder="Email"
+          type="email"
+          required
+          autoComplete="email"
+        />
+        <Input
+          name="password"
+          placeholder="Password"
+          type="password"
+          required
+          autoComplete="current-password"
+        />
+        <Link href="/forgot-password" className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 self-end text-right">Esqueci minha senha</Link>
+        <Button className="w-full" type="submit">
+          {mode === "sign-in" ? "Entrar" : "Registrar-se"}
+        </Button>
+      </form>
+      <div className="text-center mt-3">
+        <button
+          onClick={() => setMode(mode === "sign-in" ? "sign-up" : "sign-in")}
+          className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 cursor-pointer"
+        >
+          {mode === "sign-in"
+            ? "Não possui conta? Registrar"
+            : "Já possui conta? Entrar"}
+        </button>
+      </div>
+    </AuthSection>
   );
 }
