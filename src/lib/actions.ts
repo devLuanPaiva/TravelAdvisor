@@ -110,7 +110,7 @@ const requestPasswordReset = async (email: string) => {
 
             return { email: user.email };
         },
-        successMessage: "Se existe um usuário com esse email, um link de redefinição de senha foi enviado para ele.",
+        successMessage: "O link de redefinição de senha foi enviado para ele.",
     });
 };
 const resetPassword = async (prevState: unknown, formData: FormData) => {
