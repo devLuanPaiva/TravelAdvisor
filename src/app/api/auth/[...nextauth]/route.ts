@@ -27,7 +27,7 @@ const handler = NextAuth({
             authorize: async (credentials) => {
                 const validated = schema.parse(credentials);
                 const user = await db.user.findUnique({ where: { email: validated.email } });
-                if (!user) throw new Error("Invalid credentials.");
+            if (!user) throw new Error("Usuário não encontrado.");
                 return user;
             }
         }),
