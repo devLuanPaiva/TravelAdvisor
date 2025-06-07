@@ -1,8 +1,19 @@
 import { z } from "zod";
 
 const schema = z.object({
-    email: z.string().email(),
-    password: z.string().min(1),
+  name: z
+    .string()
+    .min(6, { message: "O nome de usuário deve ter pelo menos 6 caracteres" }),
+
+  email: z.string().email({ message: "E-mail inválido" }),
+
+  password: z
+    .string()
+    .min(8, { message: "A senha deve ter no mínimo 8 caracteres" })
+    .regex(/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])/, {
+      message:
+        "A senha deve conter pelo menos uma letra maiúscula, um número e um caractere especial",
+    }),
 });
 
 type Schema = z.infer<typeof schema>;
