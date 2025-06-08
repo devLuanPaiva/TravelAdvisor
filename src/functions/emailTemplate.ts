@@ -39,11 +39,11 @@ export async function emailTemplate({
           alt="Logo" 
           style="max-width: 160px; margin-bottom: 30px;" 
         />
-        <h2 style="font-size: 24px; margin-bottom: 20px;">Olá, ${name ?? "usuário"}!</h2>
+        <h2 style="font-size: 24px; margin-bottom: 20px; color: #ffffff;">Olá, ${name ?? "usuário"}!</h2>
         ${
           text1
             ? `
-          <p style="font-size: 16px; margin-bottom: 20px;">
+          <p style="font-size: 16px; margin-bottom: 20px; color: #ffffff;">
             ${text1}
           </p>
         `
@@ -52,7 +52,7 @@ export async function emailTemplate({
         ${
           text2
             ? `
-          <p style="font-size: 16px; margin-bottom: 30px;">
+          <p style="font-size: 16px; margin-bottom: 30px; color: #ffffff;">
             ${text2}
           </p>
         `
@@ -80,7 +80,7 @@ export async function emailTemplate({
         ${
           code
             ? `
-          <p style="font-size: 16px; margin-bottom: 30px;">
+          <p style="font-size: 16px; margin-bottom: 30px; color: #ffffff;">
             Seu código de verificação é: <strong>${code}</strong>
           </p>
         `
