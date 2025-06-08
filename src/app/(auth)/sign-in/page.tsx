@@ -63,12 +63,15 @@ export default function SignInPage() {
       setMessageType("error");
     }
     finally {
+      setIsLoading(false);
       setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
+        setMessage(null);
+        setMessageType(null);
+      }, 2500);
     }
   };
-
+  const buttonTextMode = mode === "sign-in" ? "Entrar" : "Registrar-se";
+  const buttonText = isLoading ? "Processando..." : buttonTextMode;
   return (
     <AuthSection title={mode === "sign-in" ? "Entrar" : "Registrar-se"}
     >
@@ -111,7 +114,7 @@ export default function SignInPage() {
         />
         <Link href="/forgot-password" className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 self-end text-right">Esqueci minha senha</Link>
         <Button className="w-full" type="submit">
-          {mode === "sign-in" ? "Entrar" : "Registrar-se"}
+          {buttonText}
         </Button>
       </form>
       <div className="text-center">

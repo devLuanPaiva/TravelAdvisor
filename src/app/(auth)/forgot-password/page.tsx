@@ -1,46 +1,76 @@
-"use client";
-import { useActionState } from "react";
-import { requestPasswordReset } from "@/lib/actions";
+'use client';
+import Link from "next/link";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { requestPasswordReset } from "@/lib/actions";
+import { MotionProgressBar } from "@/components/ui/progress";
 import { AuthSection } from "@/components/template/AuthSection";
 
-const requestPasswordResetWithForm = async (
-  prevState: unknown,
-  formData: FormData
-) => {
-  const emailValue = formData.get("email");
-  const email = typeof emailValue === "string" ? emailValue : "";
-  return await requestPasswordReset(email);
-};
-
 export default function ForgotPasswordPage() {
-  const [state, formAction] = useActionState(
-    requestPasswordResetWithForm,
-    null
-  );
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setMessage(null);
+    setMessageType(null);
+
+    try {
+      const response = await requestPasswordReset(email);
+      if (response.success) {
+        setMessage(response.message || "Solicitação enviada com sucesso.");
+        setMessageType("success");
+      } else {
+        setMessage(response.message || "Erro ao solicitar recuperação de senha.");
+        setMessageType("error");
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage(error.message || "Erro inesperado");
+      } else {
+        setMessage("Erro inesperado");
+      }
+      setMessageType("error");
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => {
+        setMessage(null);
+        setMessageType(null);
+      }, 2500);
+    }
+  };
 
   return (
     <AuthSection title="Recuperar Senha" description="Informe seu email abaixo para recuperar sua senha">
-      <form action={formAction} className="space-y-4 w-full">
+      {isLoading && <MotionProgressBar />}
+      <form onSubmit={handleSubmit} className="space-y-4 w-full">
         <Input
           name="email"
           placeholder="Email"
           type="email"
           required
           autoComplete="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
-        <Button type="submit" className="w-full">Enviar</Button>
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? "Processando..." : "Enviar"}
+        </Button>
       </form>
+
       <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
-      {state?.message && (
+
+      {message && (
         <p
-          className={`mt-4 font-semibold text-xs ${state.success ? "text-green-500" : "text-red-500"
+          className={`mt-4 font-semibold text-xs text-center p-2 rounded-md ${messageType === "success" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
             }`}
         >
-          {state.message}
+          {message}
         </p>
       )}
     </AuthSection>

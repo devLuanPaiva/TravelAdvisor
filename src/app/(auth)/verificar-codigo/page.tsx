@@ -1,19 +1,17 @@
 'use client';
-import { AuthSection } from "@/components/template/AuthSection";
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { Suspense, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-    InputOTP,
-    InputOTPGroup,
-    InputOTPSeparator,
-    InputOTPSlot
-} from "@/components/ui/input-otp";
+import React, { Suspense, useState } from "react";
+import { MotionProgressBar } from "@/components/ui/progress";
+import { useRouter, useSearchParams } from "next/navigation";
+import { AuthSection } from "@/components/template/AuthSection";
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot} from "@/components/ui/input-otp";
 
 function CodeVerification() {
     const router = useRouter();
     const [code, setCode] = useState('');
     const searchParams = useSearchParams();
+    const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<string | null>(null);
     const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
 
@@ -26,7 +24,12 @@ function CodeVerification() {
         );
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setIsLoading(true);
+        setMessage(null);
+        setMessageType(null);
+
         const formattedCode = `${code.slice(0, 3)}-${code.slice(3, 6)}`;
         try {
             const res = await fetch('/api/validation', {
@@ -39,7 +42,9 @@ function CodeVerification() {
             if (data.success) {
                 setMessage('Cadastro confirmado!');
                 setMessageType('success');
-                router.push("/sign-in");
+                setTimeout(() => {
+                    router.push("/sign-in");
+                }, 1000);
             } else {
                 setMessage(data.message ?? 'Código inválido.');
                 setMessageType('error');
@@ -52,15 +57,22 @@ function CodeVerification() {
                 setMessage("Erro inesperado");
             }
             setMessageType("error");
+        } finally {
+            setIsLoading(false);
+            setTimeout(() => {
+                setMessage(null);
+                setMessageType(null);
+            }, 2500);
         }
     };
 
     return (
         <AuthSection title="Verificar Código" description="Informe o código de verificação abaixo">
+            {isLoading && <MotionProgressBar />}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    handleSubmit();
+                    handleSubmit(e);
                 }}
                 className="space-y-4 w-full flex justify-center items-center flex-col"
             >
@@ -82,11 +94,11 @@ function CodeVerification() {
                     </InputOTPGroup>
                 </InputOTP>
 
-                <Button type="submit" className="w-full">
-                    Enviar
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                    {isLoading ? "Processando..." : "Enviar"}
                 </Button>
             </form>
-
+            <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
             {message && (
                 <div
                     className={`w-full mt-4 text-center text-xs p-2 rounded-md font-semibold ${messageType === "success"

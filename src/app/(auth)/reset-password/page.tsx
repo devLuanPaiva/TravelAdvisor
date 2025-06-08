@@ -4,7 +4,7 @@ import { Suspense, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { resetPassword } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
-import { useRouter,useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { MotionProgressBar } from "@/components/ui/progress";
 import { AuthSection } from "@/components/template/AuthSection";
 
@@ -31,7 +31,7 @@ function ResetPasswordForm() {
         setMessageType("success");
         setTimeout(() => {
           router.push("/sign-in");
-        }, 1500);
+        }, 1000);
       } else {
         setMessage(result.message || "Erro ao redefinir senha");
         setMessageType("error");
@@ -41,6 +41,10 @@ function ResetPasswordForm() {
       setMessageType("error");
     } finally {
       setIsLoading(false);
+      setTimeout(() => {
+        setMessage(null);
+        setMessageType(null);
+      }, 2500);
     }
   };
 
@@ -53,7 +57,7 @@ function ResetPasswordForm() {
   return (
     <AuthSection title="Recuperar Senha" description="Informe sua nova senha abaixo">
       {isLoading && <MotionProgressBar />}
-      
+
       <form onSubmit={handleSubmit} className="space-y-4 w-full">
         <input type="hidden" name="token" value={token ?? ""} />
         <Input
@@ -69,13 +73,12 @@ function ResetPasswordForm() {
         </Button>
       </form>
       <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
-      
+
       {message && (
-        <div className={`w-full mt-4 text-center text-xs p-2 rounded-md font-semibold ${
-          messageType === "success" 
-            ? "bg-green-100 text-green-800" 
+        <div className={`w-full mt-4 text-center text-xs p-2 rounded-md font-semibold ${messageType === "success"
+            ? "bg-green-100 text-green-800"
             : "bg-red-100 text-red-800"
-        }`}>
+          }`}>
           {message}
         </div>
       )}
