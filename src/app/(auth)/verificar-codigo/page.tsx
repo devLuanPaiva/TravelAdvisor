@@ -67,7 +67,7 @@ function CodeVerification() {
     };
 
     return (
-        <AuthSection title="Verificar Código" description="Informe o código de verificação abaixo">
+        <AuthSection title="Verificar Código" description="Informe o código de verificação abaixo" message={message} messageType={messageType}>
             {isLoading && <MotionProgressBar />}
             <form
                 onSubmit={(e) => {
@@ -99,17 +99,6 @@ function CodeVerification() {
                 </Button>
             </form>
             <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
-            {message && (
-                <div
-                    className={`w-full mt-4 text-center text-xs p-2 rounded-md font-semibold ${messageType === "success"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
-                        }`}
-                >
-                    {message}
-                </div>
-            )}
-
         </AuthSection>
     );
 }

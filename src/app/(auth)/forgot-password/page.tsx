@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <AuthSection title="Recuperar Senha" description="Informe seu email abaixo para recuperar sua senha">
+    <AuthSection title="Recuperar Senha" description="Informe seu email abaixo para recuperar sua senha" message={message} messageType={messageType}>
       {isLoading && <MotionProgressBar />}
       <form onSubmit={handleSubmit} className="space-y-4 w-full">
         <Input
@@ -64,15 +64,6 @@ export default function ForgotPasswordPage() {
       </form>
 
       <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
-
-      {message && (
-        <p
-          className={`mt-4 font-semibold text-xs text-center p-2 rounded-md ${messageType === "success" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-            }`}
-        >
-          {message}
-        </p>
-      )}
     </AuthSection>
   );
 }

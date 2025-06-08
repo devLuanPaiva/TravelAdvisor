@@ -55,7 +55,7 @@ function ResetPasswordForm() {
   );
 
   return (
-    <AuthSection title="Recuperar Senha" description="Informe sua nova senha abaixo">
+    <AuthSection title="Recuperar Senha" description="Informe sua nova senha abaixo" message={message} messageType={messageType}>
       {isLoading && <MotionProgressBar />}
 
       <form onSubmit={handleSubmit} className="space-y-4 w-full">
@@ -73,15 +73,6 @@ function ResetPasswordForm() {
         </Button>
       </form>
       <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
-
-      {message && (
-        <div className={`w-full mt-4 text-center text-xs p-2 rounded-md font-semibold ${messageType === "success"
-            ? "bg-green-100 text-green-800"
-            : "bg-red-100 text-red-800"
-          }`}>
-          {message}
-        </div>
-      )}
     </AuthSection>
   );
 }

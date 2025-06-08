@@ -4,9 +4,11 @@ interface AuthSectionProps {
     children: React.ReactNode;
     title: string;
     description?: string;
+    message?: string | null;
+    messageType?: "success" | "error" | null;
 
 }
-export function AuthSection({ children, title, description }: Readonly<AuthSectionProps>) {
+export function AuthSection({ children, title, description, message, messageType }: Readonly<AuthSectionProps>) {
     return (
         <section className="h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-5">
             <article className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-sm text-center">
@@ -29,6 +31,16 @@ export function AuthSection({ children, title, description }: Readonly<AuthSecti
                     )}
                 </header>
                 {children}
+                {message && (
+                    <div
+                        className={`w-full mt-4 text-center text-xs p-2 rounded-md font-semibold ${messageType === "success"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                            }`}
+                    >
+                        {message}
+                    </div>
+                )}
             </article>
         </section>
     )

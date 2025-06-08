@@ -73,7 +73,7 @@ export default function SignInPage() {
   const buttonTextMode = mode === "sign-in" ? "Entrar" : "Registrar-se";
   const buttonText = isLoading ? "Processando..." : buttonTextMode;
   return (
-    <AuthSection title={mode === "sign-in" ? "Entrar" : "Registrar-se"}
+    <AuthSection title={mode === "sign-in" ? "Entrar" : "Registrar-se"} message={message} messageType={messageType}
     >
       <GoogleSignIn />
       <div className="relative my-5">
@@ -127,16 +127,7 @@ export default function SignInPage() {
             : "Já possui conta? Entrar"}
         </button>
       </div>
-      {message && (
-        <div
-          className={`w-full mt-4 text-center text-xs p-2 rounded-md font-semibold ${messageType === "success"
-            ? "bg-green-100 text-green-800"
-            : "bg-red-100 text-red-800"
-            }`}
-        >
-          {message}
-        </div>
-      )}
+
 
     </AuthSection>
   );
