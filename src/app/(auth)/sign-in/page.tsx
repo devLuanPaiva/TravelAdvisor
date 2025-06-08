@@ -48,9 +48,11 @@ export default function SignInPage() {
           return;
         }
 
-        setMessage("Usuário registrado com sucesso");
+        setMessage("Verifique seu e-mail para o código de verificação.");
         setMessageType("success");
-        setMode("sign-in");
+        setTimeout(() => {
+          router.push(`/verificar-codigo?email=${email}`);
+        }, 1000);
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -61,14 +63,17 @@ export default function SignInPage() {
       setMessageType("error");
     }
     finally {
+      setIsLoading(false);
       setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
+        setMessage(null);
+        setMessageType(null);
+      }, 2500);
     }
   };
-
+  const buttonTextMode = mode === "sign-in" ? "Entrar" : "Registrar-se";
+  const buttonText = isLoading ? "Processando..." : buttonTextMode;
   return (
-    <AuthSection title={mode === "sign-in" ? "Entrar" : "Registrar-se"}
+    <AuthSection title={mode === "sign-in" ? "Entrar" : "Registrar-se"} message={message} messageType={messageType}
     >
       <GoogleSignIn />
       <div className="relative my-5">
@@ -109,7 +114,7 @@ export default function SignInPage() {
         />
         <Link href="/forgot-password" className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 self-end text-right">Esqueci minha senha</Link>
         <Button className="w-full" type="submit">
-          {mode === "sign-in" ? "Entrar" : "Registrar-se"}
+          {buttonText}
         </Button>
       </form>
       <div className="text-center">
@@ -122,16 +127,7 @@ export default function SignInPage() {
             : "Já possui conta? Entrar"}
         </button>
       </div>
-      {message && (
-        <div
-          className={`w-full mt-4 text-center text-xs p-2 rounded-md font-semibold ${messageType === "success"
-              ? "bg-green-100 text-green-800"
-              : "bg-red-100 text-red-800"
-            }`}
-        >
-          {message}
-        </div>
-      )}
+
 
     </AuthSection>
   );
