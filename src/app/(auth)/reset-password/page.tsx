@@ -12,7 +12,11 @@ function ResetPasswordForm() {
   const token = searchParams.get("token");
   const [state, formAction] = React.useActionState(resetPassword, null);
 
-  if (!token) return null
+  if (!token) return (
+    <AuthSection title="Erro" description="Token não fornecido.">
+      <p className="text-red-500">Token não fornecido na URL.</p>
+    </AuthSection>
+  )
 
   return (
     <AuthSection title="Recuperar Senha" description="Informe sua nova senha abaixo">
