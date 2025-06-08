@@ -19,9 +19,14 @@ export const resetPasswordSchema = z.object({
       message: "A senha deve conter pelo menos uma letra maiúscula, um número e um caractere especial",
     }),
 });
+export const signInSchema = z.object({
+  email: z.string().email({ message: "E-mail inválido" }),
+  password: z.string().min(1, { message: "Senha é obrigatória" }),
+});
 
 // Tipos (opcional, se precisar exportar)
 type SignUpSchema = z.infer<typeof signUpSchema>;
 type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
+type SignInSchema = z.infer<typeof signInSchema>;
 
-export { type SignUpSchema, type ResetPasswordSchema };
+export { type SignUpSchema, type ResetPasswordSchema, type SignInSchema };
