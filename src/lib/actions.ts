@@ -2,7 +2,7 @@
 import db from "@/lib/db/db";
 import { v4 as uuidv4 } from "uuid";
 import { addHours, addMinutes } from "date-fns";
-import { schema } from "@/lib/schema";
+import { resetPasswordSchema, signUpSchema } from "@/lib/schema";
 import executeAction from "./executeAction";
 
 import { ZodError } from "zod";
@@ -20,7 +20,7 @@ const signUp = async (formData: FormData) => {
       }
 
       try {
-        schema.parse({ name, email, password });
+        signUpSchema.parse({ name, email, password });
       } catch (error) {
         if (error instanceof ZodError) {
           throw new Error(error.errors[0]?.message || "Erro de validação");
@@ -126,24 +126,36 @@ const resetPassword = async (prevState: unknown, formData: FormData) => {
         throw new Error("Token inválido ou expirado.");
       }
 
-      const validatedPassword = schema.parse({
-        email: user.email,
-        password: newPassword,
-      }).password;
+      try {
+        const validatedPassword = resetPasswordSchema.parse({
+          email: user.email,
+          password: newPassword,
+        }).password;
 
-      await db.user.update({
-        where: { id: user.id },
-        data: {
-          password: validatedPassword,
-          resetToken: null,
-          resetTokenExpiry: null,
-        },
-      });
+        await db.user.update({
+          where: { id: user.id },
+          data: {
+            password: validatedPassword,
+            resetToken: null,
+            resetTokenExpiry: null,
+          },
+        });
 
-      return { success: true };
+        return { success: true };
+      } catch (error: unknown) {
+        if (
+          typeof error === "object" &&
+          error !== null &&
+          "errors" in error &&
+          Array.isArray((error as { errors: { message: string }[] }).errors) &&
+          ((error as { errors: { message: string }[] }).errors.length > 0)
+        ) {
+          throw new Error((error as { errors: { message: string }[] }).errors[0].message);
+        }
+        throw error;
+      }
     },
     successMessage: "Senha redefinida com sucesso",
   });
 };
-
 export { signUp, requestPasswordReset, resetPassword };
