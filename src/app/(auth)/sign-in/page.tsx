@@ -48,9 +48,11 @@ export default function SignInPage() {
           return;
         }
 
-        setMessage("Usuário registrado com sucesso");
+        setMessage("Verifique seu e-mail para o código de verificação.");
         setMessageType("success");
-        setMode("sign-in");
+        setTimeout(() => {
+          router.push(`/verificar-codigo?email=${email}`);
+        }, 1000);
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -125,8 +127,8 @@ export default function SignInPage() {
       {message && (
         <div
           className={`w-full mt-4 text-center text-xs p-2 rounded-md font-semibold ${messageType === "success"
-              ? "bg-green-100 text-green-800"
-              : "bg-red-100 text-red-800"
+            ? "bg-green-100 text-green-800"
+            : "bg-red-100 text-red-800"
             }`}
         >
           {message}
