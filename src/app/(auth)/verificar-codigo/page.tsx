@@ -62,7 +62,7 @@ function CodeVerification() {
                     e.preventDefault();
                     handleSubmit();
                 }}
-                className="space-y-4 w-full"
+                className="space-y-4 w-full flex justify-center items-center flex-col"
             >
                 <InputOTP
                     maxLength={6}
