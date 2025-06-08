@@ -1,6 +1,6 @@
 import db from "@/lib/db/db";
 import NextAuth from "next-auth";
-import { schema } from "@/lib/schema";
+import { signUpSchema } from "@/lib/schema";
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -25,7 +25,7 @@ const handler = NextAuth({
                 password: { label: "Password", type: "password" }
             },
             authorize: async (credentials) => {
-                const validated = schema.parse(credentials);
+                const validated = signUpSchema.parse(credentials);
                 const user = await db.user.findUnique({ where: { email: validated.email } });
             if (!user) throw new Error("Usuário não encontrado.");
                 return user;
