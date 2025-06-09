@@ -60,4 +60,17 @@ describe("emailTemplate", () => {
             })
         );
     });
+    it("includes verification code if provided", async () => {
+        await emailTemplate({
+            email: "code@example.com",
+            subject: "Código",
+            code: "123456",
+        });
+
+        expect(mockedSend).toHaveBeenCalledWith(
+            expect.objectContaining({
+                html: expect.stringContaining("123456"),
+            })
+        );
+    });
 })
