@@ -46,4 +46,18 @@ describe("emailTemplate", () => {
             })
         );
     });
+    it("includes reset link if provided", async () => {
+        const resetLink = "https://example.com/reset";
+        await emailTemplate({
+            email: "user@example.com",
+            subject: "Redefinição",
+            resetLink,
+        });
+
+        expect(mockedSend).toHaveBeenCalledWith(
+            expect.objectContaining({
+                html: expect.stringContaining(resetLink),
+            })
+        );
+    });
 })
