@@ -4,7 +4,7 @@ import {
   resetPasswordSchema,
 } from "../src/lib/schema";
 
-describe("Schemas", () => {
+describe("signUpSchema", () => {
   it("should validate sign up schema", () => {
     const result = signUpSchema.safeParse({
       name: "Usuario Teste",
@@ -38,5 +38,14 @@ describe("Schemas", () => {
         /caractere especial/
       );
     }
+  });
+});
+describe("signInSchema", () => {
+  it("must validate valid login", () => {
+    const result = signInSchema.safeParse({
+      email: "login@email.com",
+      password: "12345678",
+    });
+    expect(result.success).toBe(true);
   });
 });
