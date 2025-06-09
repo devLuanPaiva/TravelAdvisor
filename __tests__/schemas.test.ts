@@ -48,4 +48,14 @@ describe("signInSchema", () => {
     });
     expect(result.success).toBe(true);
   });
+   it('should fail with invalid email', () => {
+    const result = signInSchema.safeParse({
+      email: 'invalido-email',
+      password: '12345678',
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.format().email?._errors[0]).toBe('E-mail inválido');
+    }
+  });
 });
