@@ -33,4 +33,17 @@ describe("emailTemplate", () => {
             })
         );
     });
+    it("uses 'usuário' as default name if not provided", async () => {
+        await emailTemplate({
+            email: "anon@example.com",
+            subject: "Teste sem nome",
+            text1: "Olá!",
+        });
+
+        expect(mockedSend).toHaveBeenCalledWith(
+            expect.objectContaining({
+                html: expect.stringContaining("Olá, usuário!"),
+            })
+        );
+    });
 })
