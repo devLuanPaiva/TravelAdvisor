@@ -48,14 +48,22 @@ describe("signInSchema", () => {
     });
     expect(result.success).toBe(true);
   });
-   it('should fail with invalid email', () => {
+  it("should fail with invalid email", () => {
     const result = signInSchema.safeParse({
-      email: 'invalido-email',
-      password: '12345678',
+      email: "invalido-email",
+      password: "12345678",
     });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.format().email?._errors[0]).toBe('E-mail inválido');
+      expect(result.error.format().email?._errors[0]).toBe("E-mail inválido");
     }
+  });
+});
+describe("resetPasswordSchema", () => {
+  it("must accept valid password", () => {
+    const result = resetPasswordSchema.safeParse({
+      password: "NovaSenha@2024",
+    });
+    expect(result.success).toBe(true);
   });
 });
