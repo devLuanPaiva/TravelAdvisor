@@ -66,4 +66,13 @@ describe("resetPasswordSchema", () => {
     });
     expect(result.success).toBe(true);
   });
+   it('should reject password without number', () => {
+    const result = resetPasswordSchema.safeParse({
+      password: 'Senha@aaa',
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.format().password?._errors[0]).toMatch(/um número/);
+    }
+  });
 });
