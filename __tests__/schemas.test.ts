@@ -13,4 +13,17 @@ describe("Schemas", () => {
     });
     expect(result.success).toBe(true);
   });
+  it("should fail if the name is short ", () => {
+    const result = signUpSchema.safeParse({
+      name: "João",
+      email: "joao@email.com",
+      password: "Senha@123",
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.format().name?._errors).toContain(
+        "O nome de usuário deve ter pelo menos 6 caracteres"
+      );
+    }
+  });
 });
