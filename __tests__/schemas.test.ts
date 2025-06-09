@@ -26,4 +26,17 @@ describe("Schemas", () => {
       );
     }
   });
+  it("should fail with weak password", () => {
+    const result = signUpSchema.safeParse({
+      name: "Usuario Valido",
+      email: "valido@email.com",
+      password: "senha123",
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.format().password?._errors[0]).toMatch(
+        /caractere especial/
+      );
+    }
+  });
 });
