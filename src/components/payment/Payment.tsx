@@ -41,6 +41,7 @@ export function Payment({ session }: Readonly<{ session: Session }>) {
                 createMercadoPagoCheckout({
                   testeId: "123",
                   userEmail: session.user?.email,
+                  plan: plan.id,
                 })
               }
             >
