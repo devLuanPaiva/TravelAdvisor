@@ -2,9 +2,10 @@
 import Loading from "../shared/Loading";
 import { useEffect, useState } from "react";
 import { PlacesSidebar } from "./PlacesSidebar";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker, OverlayView, useJsApiLoader } from "@react-google-maps/api";
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
 import { Session } from "next-auth";
+import Image from "next/image";
 
 type Place = google.maps.places.PlaceResult;
 
@@ -94,21 +95,45 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
             center={currentPosition}
             zoom={18}
           >
-            <Marker position={currentPosition} icon={{
-              url: '/marker.png',
-              scaledSize: new google.maps.Size(150, 150), 
-            }}
+            <Marker position={currentPosition}
+              animation={google.maps.Animation.DROP}
+              icon={{
+                url: '/marker.png',
+                scaledSize: new google.maps.Size(150, 150),
+              }}
             />
-            {places.map((place, index) => (
-              <Marker
-                key={place.place_id ?? index}
-                position={{
-                  lat: place.geometry?.location?.lat() ?? 0,
-                  lng: place.geometry?.location?.lng() ?? 0,
-                }}
-                title={place.name}
-              />
-            ))}
+            {places.map((place, index) => {
+              const position = {
+                lat: place.geometry?.location?.lat() ?? 0,
+                lng: place.geometry?.location?.lng() ?? 0,
+              };
+
+              return (
+                <OverlayView
+                  key={place.place_id ?? index}
+                  position={position}
+                  mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+                >
+                  <div className="bg-white rounded-xl shadow-lg w-52 p-2 text-center transform -translate-x-1/2 -translate-y-full">
+                    {place.photos?.[0] ? (
+                      <Image
+                        src={place.photos[0].getUrl({ maxWidth: 200 })}
+                        alt={place.name ?? 'Imagem do local'}
+                        width={200}
+                        height={100}
+                        className="w-full h-28 object-cover rounded-md mb-1"
+                      />
+                    ) : (
+                      <div className="w-full h-28 bg-gray-300 rounded-md flex items-center justify-center text-gray-600 mb-1">
+                        Sem imagem
+                      </div>
+                    )}
+                    <p className="text-sm font-semibold">{place.name}</p>
+                  </div>
+                </OverlayView>
+              );
+            })}
+
           </GoogleMap>
         ) : (
           <Loading message="Carregando..." />
