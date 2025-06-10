@@ -4,11 +4,12 @@ O **Travel Advisor** é uma plataforma inovadora, desenvolvida com **Next.js**, 
 
 ## ✅ Status do Projeto
 
-🚧 Versão **2.5** — Em desenvolvimento  
+🚧 Versão **3.0** — Em desenvolvimento  
 ✅ Sistema de autenticação implementado utilizando **NextAuth.js**, com suporte para:
 
 - Login via **Google**
 - Login via **credentials (email/senha)**
+- Envios de email via **Resend API**
 
 ## ✅ Integração com mapas para exibir locais mais próximos, dando sugestões de restaurantes, bares, postos e etc.
 
@@ -28,6 +29,7 @@ O **Travel Advisor** é uma plataforma inovadora, desenvolvida com **Next.js**, 
 - [RapidAPI](https://rapidapi.com/)
 - [Jest](https://jestjs.io/pt-BR/)
 - [Mercado Pago](https://www.mercadopago.com.br/developers/pt)
+- [Resend](https://resend.com/)
 
 ---
 
@@ -72,6 +74,10 @@ npm install
 - MERCADO_PAGO_ACCESS_TOKEN=
 - MERCADO_PAGO_WEBHOOK_SECRET=
 - NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY=
+
+### Resend configuration
+
+- RESEND_API_KEY=
 
 ---
 

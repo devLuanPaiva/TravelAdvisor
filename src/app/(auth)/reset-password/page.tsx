@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MotionProgressBar } from "@/components/ui/progress";
 import { AuthSection } from "@/components/template/AuthSection";
+import Loading from "@/components/shared/Loading";
 
 function ResetPasswordForm() {
   const router = useRouter();
@@ -14,7 +15,9 @@ function ResetPasswordForm() {
   const token = searchParams.get("token");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
-  const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(
+    null
+  );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -48,14 +51,20 @@ function ResetPasswordForm() {
     }
   };
 
-  if (!token) return (
-    <AuthSection title="Erro" description="Token não fornecido.">
-      <p className="text-red-500">Token não fornecido na URL.</p>
-    </AuthSection>
-  );
+  if (!token)
+    return (
+      <AuthSection title="Erro" description="Token não fornecido.">
+        <p className="text-red-500">Token não fornecido na URL.</p>
+      </AuthSection>
+    );
 
   return (
-    <AuthSection title="Recuperar Senha" description="Informe sua nova senha abaixo" message={message} messageType={messageType}>
+    <AuthSection
+      title="Recuperar Senha"
+      description="Informe sua nova senha abaixo"
+      message={message}
+      messageType={messageType}
+    >
       {isLoading && <MotionProgressBar />}
 
       <form onSubmit={handleSubmit} className="space-y-4 w-full">
@@ -72,14 +81,16 @@ function ResetPasswordForm() {
           {isLoading ? "Processando..." : "Enviar"}
         </Button>
       </form>
-      <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">Voltar</Link>
+      <Link href="/sign-in" className="text-sm text-gray-600 mt-4 block">
+        Voltar
+      </Link>
     </AuthSection>
   );
 }
 
 export default function ResetPasswordPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading message="Carregando..." />}>
       <ResetPasswordForm />
     </Suspense>
   );

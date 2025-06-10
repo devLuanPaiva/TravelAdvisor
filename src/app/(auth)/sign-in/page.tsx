@@ -14,7 +14,9 @@ export default function SignInPage() {
   const [mode, setMode] = useState("sign-in");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
-  const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(
+    null
+  );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -61,8 +63,7 @@ export default function SignInPage() {
         setMessage("Erro inesperado");
       }
       setMessageType("error");
-    }
-    finally {
+    } finally {
       setIsLoading(false);
       setTimeout(() => {
         setMessage(null);
@@ -73,7 +74,10 @@ export default function SignInPage() {
   const buttonTextMode = mode === "sign-in" ? "Entrar" : "Registrar-se";
   const buttonText = isLoading ? "Processando..." : buttonTextMode;
   return (
-    <AuthSection title={mode === "sign-in" ? "Entrar" : "Registrar-se"} message={message} messageType={messageType}
+    <AuthSection
+      title={mode === "sign-in" ? "Entrar" : "Registrar-se"}
+      message={message}
+      messageType={messageType}
     >
       <GoogleSignIn />
       <div className="relative my-5">
@@ -88,7 +92,10 @@ export default function SignInPage() {
       </div>
       {isLoading && <MotionProgressBar />}
 
-      <form className="space-y-4 w-full flex flex-col items-center pb-6" onSubmit={handleSubmit}>
+      <form
+        className="space-y-4 w-full flex flex-col items-center pb-6"
+        onSubmit={handleSubmit}
+      >
         {mode === "sign-up" && (
           <Input
             name="name"
@@ -112,7 +119,14 @@ export default function SignInPage() {
           required
           autoComplete="current-password"
         />
-        <Link href="/forgot-password" className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 self-end text-right">Esqueci minha senha</Link>
+        {mode === "sign-in" && (
+          <Link
+            href="/forgot-password"
+            className="text-xs sm:text-sm lg:text-base text-gray-500 hover:text-gray-700 self-end text-right"
+          >
+            Esqueci minha senha
+          </Link>
+        )}
         <Button className="w-full" type="submit">
           {buttonText}
         </Button>
@@ -127,8 +141,6 @@ export default function SignInPage() {
             : "Já possui conta? Entrar"}
         </button>
       </div>
-
-
     </AuthSection>
   );
 }
