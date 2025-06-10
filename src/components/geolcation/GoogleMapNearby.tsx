@@ -73,15 +73,13 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
         isShowSidebar={isShowSidebar}
       />
       <section
-        className={`flex flex-col gap-2 h-full p-5 md:p-10 relative transition-all duration-300 ${
-          isShowSidebar ? "w-full md:w-3/4" : "w-full"
-        }`}
+        className={`flex flex-col gap-2 h-full p-5 md:p-10 relative transition-all duration-300 ${isShowSidebar ? "w-full md:w-3/4" : "w-full"
+          }`}
         style={{ zIndex: 0 }}
       >
         <button
-          className={`w-fit bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-50 ${
-            isShowSidebar && "max-md:self-end"
-          } `}
+          className={`w-fit bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-50 ${isShowSidebar && "max-md:self-end"
+            } `}
           onClick={() => setIsShowSidebar(!isShowSidebar)}
         >
           {isShowSidebar ? (
@@ -96,7 +94,11 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
             center={currentPosition}
             zoom={18}
           >
-            <Marker position={currentPosition} label="Você está aqui" />
+            <Marker position={currentPosition} icon={{
+              url: '/marker.png',
+              scaledSize: new google.maps.Size(150, 150), 
+            }}
+            />
             {places.map((place, index) => (
               <Marker
                 key={place.place_id ?? index}
