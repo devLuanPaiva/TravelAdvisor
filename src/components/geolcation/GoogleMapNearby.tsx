@@ -133,7 +133,10 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
           <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%" }}
             center={currentPosition}
-            zoom={18}
+            zoom={16}
+            options={{
+              mapTypeId: "satellite",
+            }}
           >
             {directions && <DirectionsRenderer directions={directions} />}
 
