@@ -1,6 +1,6 @@
 "use client";
 import Loading from "../shared/Loading";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PlacesSidebar } from "./PlacesSidebar";
 import {
   GoogleMap,
@@ -12,92 +12,27 @@ import {
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
 import { Session } from "next-auth";
 import Image from "next/image";
+import { useNearbyPlaces } from "@/hooks/useNearbyPlaces";
 
-type Place = google.maps.places.PlaceResult;
 
 export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
-  const [places, setPlaces] = useState<Place[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("restaurant");
-  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
-  const [directions, setDirections] =
-    useState<google.maps.DirectionsResult | null>(null);
-
-  const [currentPosition, setCurrentPosition] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
   const [isShowSidebar, setIsShowSidebar] = useState(false);
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
+  const {
+    currentPosition,
+    places,
+    error,
+    directions,
+    selectedPlace,
+    setSelectedPlace,
+    setDirections,
+  } = useNearbyPlaces(selectedType);
 
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: apiKey,
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     libraries: ["places"],
   });
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setCurrentPosition({
-          lat: latitude,
-          lng: longitude,
-        });
-      },
-      (err) => setError("Erro ao obter localização: " + err.message)
-    );
-  }, []);
-
-  useEffect(() => {
-    if (!currentPosition || !isLoaded) return;
-
-    const map = new google.maps.Map(document.createElement("div"));
-    const service = new google.maps.places.PlacesService(map);
-
-    const request: google.maps.places.PlaceSearchRequest = {
-      location: currentPosition,
-      radius: 10000,
-      type: selectedType,
-    };
-
-    service.nearbySearch(request, (results, status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-        setPlaces(results);
-      } else {
-        setError("Erro ao buscar locais: " + status);
-      }
-    });
-  }, [currentPosition, isLoaded, selectedType]);
-  useEffect(() => {
-    console.log("place selected", selectedPlace);
-  }, [selectedPlace]);
-
-  useEffect(() => {
-    if (!selectedPlace || !currentPosition) return;
-
-    const destination = {
-      lat: selectedPlace.geometry?.location?.lat() ?? 0,
-      lng: selectedPlace.geometry?.location?.lng() ?? 0,
-    };
-
-    const directionsService = new google.maps.DirectionsService();
-    directionsService.route(
-      {
-        origin: currentPosition,
-        destination: destination,
-        travelMode: google.maps.TravelMode.DRIVING,
-      },
-      (result, status) => {
-        if (status === google.maps.DirectionsStatus.OK) {
-          setDirections(result);
-        } else {
-          console.error("Erro ao traçar rota:", status);
-        }
-      }
-    );
-  }, [selectedPlace, currentPosition]);
 
   if (loadError) return <div>Erro ao carregar o mapa</div>;
   if (!isLoaded) return;
