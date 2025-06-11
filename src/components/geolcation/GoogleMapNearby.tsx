@@ -142,7 +142,7 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
               animation={google.maps.Animation.DROP}
               icon={{
                 url: "/marker.png",
-                scaledSize: new google.maps.Size(150, 150),
+                scaledSize: new google.maps.Size(135, 135),
               }}
             />
             {places.map((place, index) => {
@@ -178,9 +178,13 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
                         className="w-full h-28 object-cover rounded-[5px] sm:rounded-md mb-1 max-sm:h-20"
                       />
                     ) : (
-                      <div className="w-full h-28 bg-gray-300 rounded-md flex items-center justify-center text-gray-600 mb-1 max-sm:h-20 text-xs">
-                        Sem imagem
-                      </div>
+                      <Image
+                        src="/notImage.png"
+                        alt="Sem imagem do local"
+                        width={200}
+                        height={100}
+                        className="w-full h-32 object-cover rounded-[5px] sm:rounded-md mb-1 max-sm:h-20"
+                      />
                     )}
                     <p className="text-sm font-semibold max-sm:text-xs">
                       {place.name}
