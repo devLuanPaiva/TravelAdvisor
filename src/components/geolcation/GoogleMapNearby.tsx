@@ -112,15 +112,13 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
         isShowSidebar={isShowSidebar}
       />
       <section
-        className={`flex flex-col gap-2 h-full p-5 md:p-10 relative transition-all duration-300 ${
-          isShowSidebar ? "w-full md:w-3/4" : "w-full"
-        }`}
+        className={`flex flex-col gap-2 h-full p-5 md:p-10 relative transition-all duration-300 ${isShowSidebar ? "w-full md:w-3/4" : "w-full"
+          }`}
         style={{ zIndex: 0 }}
       >
         <button
-          className={`w-fit bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-50 ${
-            isShowSidebar && "max-md:self-end"
-          } `}
+          className={`w-fit bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-50 ${isShowSidebar && "max-md:self-end"
+            } `}
           onClick={() => setIsShowSidebar(!isShowSidebar)}
         >
           {isShowSidebar ? (
@@ -129,6 +127,7 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
             <GoSidebarExpand className="w-6 h-6" />
           )}
         </button>
+
         {currentPosition ? (
           <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%" }}
@@ -140,6 +139,26 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
           >
             {directions && <DirectionsRenderer directions={directions} />}
 
+            {directions?.routes[0]?.legs[0] && (
+              <OverlayView
+                position={{
+                  lat:
+                    (directions.routes[0].legs[0].start_location.lat() +
+                      directions.routes[0].legs[0].end_location.lat()) /
+                    2,
+                  lng:
+                    (directions.routes[0].legs[0].start_location.lng() +
+                      directions.routes[0].legs[0].end_location.lng()) /
+                    2,
+                }}
+                mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+              >
+                <div className="bg-white px-3 py-1 min-w-[120px] rounded shadow text-sm font-medium border border-gray-300">
+                  {directions.routes[0].legs[0].distance?.text} (
+                  {directions.routes[0].legs[0].duration?.text})
+                </div>
+              </OverlayView>
+            )}
             <Marker
               position={currentPosition}
               animation={google.maps.Animation.DROP}
