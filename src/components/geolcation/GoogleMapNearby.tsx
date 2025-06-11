@@ -2,7 +2,12 @@
 import Loading from "../shared/Loading";
 import { useEffect, useState } from "react";
 import { PlacesSidebar } from "./PlacesSidebar";
-import { GoogleMap, Marker, OverlayView, useJsApiLoader } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  Marker,
+  OverlayView,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
 import { Session } from "next-auth";
 import Image from "next/image";
@@ -13,6 +18,7 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
   const [places, setPlaces] = useState<Place[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("restaurant");
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [currentPosition, setCurrentPosition] = useState<{
     lat: number;
     lng: number;
@@ -60,6 +66,9 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
       }
     });
   }, [currentPosition, isLoaded, selectedType]);
+  useEffect(() => {
+    console.log("place selected", selectedPlace);
+  }, [selectedPlace]);
 
   if (loadError) return <div>Erro ao carregar o mapa</div>;
   if (!isLoaded) return;
@@ -74,13 +83,15 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
         isShowSidebar={isShowSidebar}
       />
       <section
-        className={`flex flex-col gap-2 h-full p-5 md:p-10 relative transition-all duration-300 ${isShowSidebar ? "w-full md:w-3/4" : "w-full"
-          }`}
+        className={`flex flex-col gap-2 h-full p-5 md:p-10 relative transition-all duration-300 ${
+          isShowSidebar ? "w-full md:w-3/4" : "w-full"
+        }`}
         style={{ zIndex: 0 }}
       >
         <button
-          className={`w-fit bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-50 ${isShowSidebar && "max-md:self-end"
-            } `}
+          className={`w-fit bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-50 ${
+            isShowSidebar && "max-md:self-end"
+          } `}
           onClick={() => setIsShowSidebar(!isShowSidebar)}
         >
           {isShowSidebar ? (
@@ -95,10 +106,11 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
             center={currentPosition}
             zoom={18}
           >
-            <Marker position={currentPosition}
+            <Marker
+              position={currentPosition}
               animation={google.maps.Animation.DROP}
               icon={{
-                url: '/marker.png',
+                url: "/marker.png",
                 scaledSize: new google.maps.Size(150, 150),
               }}
             />
@@ -114,11 +126,20 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
                   position={position}
                   mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
                 >
-                  <div className="bg-white rounded-xl shadow-lg w-52 p-2 text-center transform -translate-x-1/2 -translate-y-full">
+                  <button
+                    onClick={() =>
+                      setSelectedPlace(
+                        selectedPlace?.place_id === place.place_id
+                          ? null
+                          : place
+                      )
+                    }
+                    className={`bg-white rounded-xl shadow-lg w-52 p-2 text-center transform -translate-x-1/2 -translate-y-full cursor-pointer ${selectedPlace && selectedPlace.place_id !== place.place_id ? "hidden" : ""}`}
+                  >
                     {place.photos?.[0] ? (
                       <Image
                         src={place.photos[0].getUrl({ maxWidth: 200 })}
-                        alt={place.name ?? 'Imagem do local'}
+                        alt={place.name ?? "Imagem do local"}
                         width={200}
                         height={100}
                         className="w-full h-28 object-cover rounded-md mb-1"
@@ -129,11 +150,10 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
                       </div>
                     )}
                     <p className="text-sm font-semibold">{place.name}</p>
-                  </div>
+                  </button>
                 </OverlayView>
               );
             })}
-
           </GoogleMap>
         ) : (
           <Loading message="Carregando..." />
