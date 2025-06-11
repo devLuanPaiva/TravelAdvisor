@@ -7,6 +7,7 @@ import {
   Marker,
   OverlayView,
   useJsApiLoader,
+  DirectionsRenderer,
 } from "@react-google-maps/api";
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
 import { Session } from "next-auth";
@@ -19,6 +20,9 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
   const [error, setError] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("restaurant");
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [directions, setDirections] =
+    useState<google.maps.DirectionsResult | null>(null);
+
   const [currentPosition, setCurrentPosition] = useState<{
     lat: number;
     lng: number;
@@ -70,6 +74,31 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
     console.log("place selected", selectedPlace);
   }, [selectedPlace]);
 
+  useEffect(() => {
+    if (!selectedPlace || !currentPosition) return;
+
+    const destination = {
+      lat: selectedPlace.geometry?.location?.lat() ?? 0,
+      lng: selectedPlace.geometry?.location?.lng() ?? 0,
+    };
+
+    const directionsService = new google.maps.DirectionsService();
+    directionsService.route(
+      {
+        origin: currentPosition,
+        destination: destination,
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          setDirections(result);
+        } else {
+          console.error("Erro ao traçar rota:", status);
+        }
+      }
+    );
+  }, [selectedPlace, currentPosition]);
+
   if (loadError) return <div>Erro ao carregar o mapa</div>;
   if (!isLoaded) return;
 
@@ -106,6 +135,8 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
             center={currentPosition}
             zoom={18}
           >
+            {directions && <DirectionsRenderer directions={directions} />}
+
             <Marker
               position={currentPosition}
               animation={google.maps.Animation.DROP}
@@ -127,13 +158,14 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
                   mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
                 >
                   <button
-                    onClick={() =>
+                    onClick={() => {
                       setSelectedPlace(
                         selectedPlace?.place_id === place.place_id
                           ? null
                           : place
-                      )
-                    }
+                      );
+                      setDirections(null);
+                    }}
                     className={`bg-white rounded-xl shadow-lg w-52 p-2 text-center transform -translate-x-1/2 -translate-y-full cursor-pointer ${selectedPlace && selectedPlace.place_id !== place.place_id ? "hidden" : ""}`}
                   >
                     {place.photos?.[0] ? (
