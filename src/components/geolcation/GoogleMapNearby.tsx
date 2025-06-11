@@ -166,7 +166,8 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
                       );
                       setDirections(null);
                     }}
-                    className={`bg-white rounded-xl shadow-lg w-52 p-2 text-center transform -translate-x-1/2 -translate-y-full cursor-pointer ${selectedPlace && selectedPlace.place_id !== place.place_id ? "hidden" : ""}`}
+                    className={`bg-white rounded-[5px] sm:rounded-xl shadow-lg w-52 p-2 text-center transform -translate-x-1/2 -translate-y-full cursor-pointer ${selectedPlace && selectedPlace.place_id !== place.place_id ? "hidden" : ""}
+                        max-sm:w-36 max-sm:p-1`}
                   >
                     {place.photos?.[0] ? (
                       <Image
@@ -174,14 +175,16 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
                         alt={place.name ?? "Imagem do local"}
                         width={200}
                         height={100}
-                        className="w-full h-28 object-cover rounded-md mb-1"
+                        className="w-full h-28 object-cover rounded-[5px] sm:rounded-md mb-1 max-sm:h-20"
                       />
                     ) : (
-                      <div className="w-full h-28 bg-gray-300 rounded-md flex items-center justify-center text-gray-600 mb-1">
+                      <div className="w-full h-28 bg-gray-300 rounded-md flex items-center justify-center text-gray-600 mb-1 max-sm:h-20 text-xs">
                         Sem imagem
                       </div>
                     )}
-                    <p className="text-sm font-semibold">{place.name}</p>
+                    <p className="text-sm font-semibold max-sm:text-xs">
+                      {place.name}
+                    </p>
                   </button>
                 </OverlayView>
               );
