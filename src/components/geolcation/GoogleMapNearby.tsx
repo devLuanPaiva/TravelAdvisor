@@ -14,10 +14,14 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import { useNearbyPlaces } from "@/hooks/useNearbyPlaces";
 
-
 export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
   const [selectedType, setSelectedType] = useState<string>("restaurant");
   const [isShowSidebar, setIsShowSidebar] = useState(false);
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+    libraries: ["places"],
+  });
+
   const {
     currentPosition,
     places,
@@ -26,13 +30,7 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
     selectedPlace,
     setSelectedPlace,
     setDirections,
-  } = useNearbyPlaces(selectedType);
-
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-    libraries: ["places"],
-  });
-
+  } = useNearbyPlaces(selectedType, isLoaded);
 
   if (loadError) return <div>Erro ao carregar o mapa</div>;
   if (!isLoaded) return;
@@ -47,13 +45,15 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
         isShowSidebar={isShowSidebar}
       />
       <section
-        className={`flex flex-col gap-2 h-full p-5 md:p-10 relative transition-all duration-300 ${isShowSidebar ? "w-full md:w-3/4" : "w-full"
-          }`}
+        className={`flex flex-col gap-2 h-full p-5 md:p-10 relative transition-all duration-300 ${
+          isShowSidebar ? "w-full md:w-3/4" : "w-full"
+        }`}
         style={{ zIndex: 0 }}
       >
         <button
-          className={`w-fit bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-50 ${isShowSidebar && "max-md:self-end"
-            } `}
+          className={`w-fit bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-50 ${
+            isShowSidebar && "max-md:self-end"
+          } `}
           onClick={() => setIsShowSidebar(!isShowSidebar)}
         >
           {isShowSidebar ? (
