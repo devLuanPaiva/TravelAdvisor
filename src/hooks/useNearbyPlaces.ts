@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 type Place = google.maps.places.PlaceResult;
 
-export function useNearbyPlaces(selectedType: string) {
+export function useNearbyPlaces(selectedType: string, isLoaded: boolean) {
   const [places, setPlaces] = useState<Place[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
@@ -27,7 +27,7 @@ export function useNearbyPlaces(selectedType: string) {
   }, []);
 
   useEffect(() => {
-    if (!currentPosition) return;
+    if (!currentPosition || !isLoaded) return;
 
     const map = new google.maps.Map(document.createElement("div"));
     const service = new google.maps.places.PlacesService(map);
