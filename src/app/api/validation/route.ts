@@ -4,7 +4,7 @@ import db from "@/lib/db/db";
 export async function POST(request: NextRequest) {
   const { email, code } = await request.json();
   const user = await db.user.findUnique({ where: { email } });
-  if ( user?.resetTokenExpiry && user?.resetTokenExpiry < new Date()) {
+  if (user?.resetTokenExpiry && user?.resetTokenExpiry < new Date()) {
     await db.user.delete({ where: { email } });
     return NextResponse.json(
       { success: false, message: "Código expirado, tente novamente" },
@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
     data: {
       resetToken: null,
       resetTokenExpiry: null,
+      emailVerified: new Date(),
     },
   });
   return NextResponse.json(
