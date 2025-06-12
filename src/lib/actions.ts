@@ -47,8 +47,8 @@ const signUp = async (formData: FormData) => {
           resetTokenExpiry: expiry,
         },
       });
-      
-      emailTemplate({
+
+      await emailTemplate({
         subject: "Código de verificação do Travel Advisor",
         email: newUser.email ?? "",
         name: newUser.name ?? "usuário",
@@ -86,7 +86,7 @@ const requestPasswordReset = async (email: string) => {
         },
       });
       const resetLink = `${process.env.NEXTAUTH_URL}/reset-password?token=${resetToken}`;
-      emailTemplate({
+      await emailTemplate({
         subject: "Redefinição de senha do Travel Advisor",
         email: user.email ?? "",
         resetLink,
