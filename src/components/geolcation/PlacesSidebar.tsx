@@ -24,6 +24,7 @@ export interface PlacesSidebarProps {
   setSelectedType: (type: string) => void;
   isShowSidebar: boolean;
   session: Session;
+  onSelectPlace: (place: google.maps.places.PlaceResult) => void;
 }
 
 export function PlacesSidebar({
@@ -32,6 +33,7 @@ export function PlacesSidebar({
   setSelectedType,
   isShowSidebar,
   session,
+  onSelectPlace,
 }: Readonly<PlacesSidebarProps>) {
   const [isTypeOpen, setIsTypeOpen] = useState(false);
   const [showAllPlaces, setShowAllPlaces] = useState(false);
@@ -85,10 +87,11 @@ export function PlacesSidebar({
         Resultados próximos
       </h3>
 
-      <section className="flex flex-col gap-4 px-4 pb-6">
+      <section className="flex flex-col gap-4 px-4 pb-6 flex-1 min-h-full">
         {displayedPlaces.map((place, index) => (
-          <div
+          <button
             key={place.place_id ?? index}
+            onClick={() => onSelectPlace(place)}
             className="bg-gray-800 hover:bg-gray-700 p-3 rounded-xl shadow-sm transition-all duration-300"
           >
             {place.photos?.[0] && (
@@ -108,7 +111,7 @@ export function PlacesSidebar({
                 ⭐ {place.rating.toFixed(1)} / 5
               </p>
             )}
-          </div>
+          </button>
         ))}
 
         {placesWithImages.length > 3 && (
