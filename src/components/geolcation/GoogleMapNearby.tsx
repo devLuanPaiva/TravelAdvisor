@@ -65,7 +65,11 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
 
         {currentPosition ? (
           <GoogleMap
-            mapContainerStyle={{ width: "100%", height: "100%" }}
+            mapContainerStyle={{
+              width: "100%",
+              height: "100%",
+              borderRadius: 10,
+            }}
             center={currentPosition}
             zoom={16}
             options={{
