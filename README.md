@@ -1,10 +1,26 @@
 # 🌍 Travel Advisor
 
+<div align="center">
+    <img src="https://www.traveladvisor.site/logo.png" width="350px">
+</div>
+<div data-badges align="center">
+  <img src="https://img.shields.io/badge/next.js-%23000000.svg?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/react.js-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React.js" />
+  <img src="https://img.shields.io/badge/nextauth.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white" alt="NextAuth.js" />
+  <img src="https://img.shields.io/badge/google%20oauth-%234285F4.svg?style=for-the-badge&logo=google&logoColor=white" alt="Google OAuth" />
+  <img src="https://img.shields.io/badge/mercado%20pago-009EE3?style=for-the-badge&logo=mercado-pago&logoColor=white" alt="Mercado Pago API" />
+  <img src="https://img.shields.io/badge/resend%20api-%000000.svg?style=for-the-badge&logoColor=white" alt="Resend API" />
+  <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS" />
+  <img src="https://img.shields.io/badge/postgresql-%23336791.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/prisma-%232D3748.svg?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
+  <img src="https://img.shields.io/badge/google%20maps%20api-%234285F4.svg?style=for-the-badge&logo=googlemaps&logoColor=white" alt="Google Maps API" />
+</div>
+
 O **Travel Advisor** é uma plataforma inovadora, desenvolvida com **Next.js**, **TypeScript**, **Tailwind CSS**, **Prisma** e **PostgreSQL**, com o objetivo de ajudar usuários a **explorar destinos**, **receber recomendações personalizadas de viagem** e **encontrar atrações, hospedagens e restaurantes** ao redor do mundo.
 
 ## ✅ Status do Projeto
 
-🚧 Versão **3.0** — Em desenvolvimento  
+🚧 Versão **3.0** — Concluído  
 ✅ Sistema de autenticação implementado utilizando **NextAuth.js**, com suporte para:
 
 - Login via **Google**

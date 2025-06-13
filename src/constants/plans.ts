@@ -22,14 +22,14 @@ export const travelPlans: IPlans[] = [
         image: patagoniaImg.src
     },
     {
-        id: "#5414404124",
+        id: "#5414416932",
         name: "Romance em Paris",
         price: 7999.99,
         description: "Hospedagem, passeios e jantar com vista para a Torre Eiffel.",
         image: parisImg.src
     },
     {
-        id: "#5414404124",
+        id: "#5414442924",
         name: "Cultura e História no Egito",
         price: 6890.00,
         description: "Conheça as pirâmides, museus e o rio Nilo em um só pacote.",

@@ -43,6 +43,11 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
         selectedType={selectedType}
         setSelectedType={setSelectedType}
         isShowSidebar={isShowSidebar}
+        onSelectPlace={(place) => {
+          setSelectedPlace(place);
+          setDirections(null);
+        }}
+        selectedPlace={selectedPlace}
       />
       <section
         className={`flex flex-col gap-2 h-full p-5 md:p-10 relative transition-all duration-300 ${
@@ -65,7 +70,11 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
 
         {currentPosition ? (
           <GoogleMap
-            mapContainerStyle={{ width: "100%", height: "100%" }}
+            mapContainerStyle={{
+              width: "100%",
+              height: "100%",
+              borderRadius: 10,
+            }}
             center={currentPosition}
             zoom={16}
             options={{

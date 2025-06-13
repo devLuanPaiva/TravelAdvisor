@@ -45,7 +45,7 @@ export function useNearbyPlaces(selectedType: string, isLoaded: boolean) {
         setError("Erro ao buscar locais: " + status);
       }
     });
-  }, [currentPosition, selectedType]);
+  }, [currentPosition, selectedType, isLoaded]);
 
   useEffect(() => {
     if (!selectedPlace || !currentPosition) return;
