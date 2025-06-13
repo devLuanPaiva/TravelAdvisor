@@ -47,6 +47,7 @@ export function GoogleMapNearby({ session }: Readonly<{ session: Session }>) {
           setSelectedPlace(place);
           setDirections(null);
         }}
+        selectedPlace={selectedPlace}
       />
       <section
         className={`flex flex-col gap-2 h-full p-5 md:p-10 relative transition-all duration-300 ${

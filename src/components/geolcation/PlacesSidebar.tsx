@@ -24,7 +24,8 @@ export interface PlacesSidebarProps {
   setSelectedType: (type: string) => void;
   isShowSidebar: boolean;
   session: Session;
-  onSelectPlace: (place: google.maps.places.PlaceResult) => void;
+  onSelectPlace: (place: google.maps.places.PlaceResult | null) => void;
+  selectedPlace: google.maps.places.PlaceResult | null;
 }
 
 export function PlacesSidebar({
@@ -34,6 +35,7 @@ export function PlacesSidebar({
   isShowSidebar,
   session,
   onSelectPlace,
+  selectedPlace,
 }: Readonly<PlacesSidebarProps>) {
   const [isTypeOpen, setIsTypeOpen] = useState(false);
   const [showAllPlaces, setShowAllPlaces] = useState(false);
@@ -69,7 +71,10 @@ export function PlacesSidebar({
           {placeTypes.map((type) => (
             <li key={type.value}>
               <button
-                onClick={() => setSelectedType(type.value)}
+                onClick={() => {
+                  setSelectedType(type.value);
+                  onSelectPlace(null);
+                }}
                 className={`w-full px-4 py-2 rounded-lg text-sm font-medium tracking-tight transition-colors duration-200 outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                   selectedType === type.value
                     ? "bg-blue-600 text-white"
@@ -91,7 +96,11 @@ export function PlacesSidebar({
         {displayedPlaces.map((place, index) => (
           <button
             key={place.place_id ?? index}
-            onClick={() => onSelectPlace(place)}
+            onClick={() =>
+              onSelectPlace(
+                selectedPlace?.place_id === place.place_id ? null : place
+              )
+            }
             className="bg-gray-800 hover:bg-gray-700 p-3 rounded-xl shadow-sm transition-all duration-300"
           >
             {place.photos?.[0] && (
