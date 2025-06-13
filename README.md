@@ -8,8 +8,8 @@
   <img src="https://img.shields.io/badge/react.js-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React.js" />
   <img src="https://img.shields.io/badge/nextauth.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white" alt="NextAuth.js" />
   <img src="https://img.shields.io/badge/google%20oauth-%234285F4.svg?style=for-the-badge&logo=google&logoColor=white" alt="Google OAuth" />
-  <img src="https://img.shields.io/badge/mercado%20pago-009EE3?style=for-the-badge&logo=mercado-pago&logoColor=white" alt="Mercado Pago API" />
-  <img src="https://img.shields.io/badge/resend%20api-%000000.svg?style=for-the-badge&logoColor=white" alt="Resend API" />
+  <img src="https://img.shields.io/badge/mercado%20pago-FFE600?style=for-the-badge&logo=mercado-pago&logoColor=black" alt="Mercado Pago API" />
+  <img src="https://img.shields.io/badge/resend%20api-000000?style=for-the-badge&logoColor=white" alt="Resend API" />
   <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS" />
   <img src="https://img.shields.io/badge/postgresql-%23336791.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
   <img src="https://img.shields.io/badge/prisma-%232D3748.svg?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
