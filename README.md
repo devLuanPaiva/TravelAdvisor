@@ -97,6 +97,18 @@ npm run dev
 Acesse em: http://localhost:3000
 ```
 
+## 🌌 Interfaces
+
+![interfaces](https://ik.imagekit.io/p0mm3nebo/travelAdvisor/Group%208.jpg?updatedAt=1749772746299)
+
+![interfaces](https://ik.imagekit.io/p0mm3nebo/travelAdvisor/Group%2012.jpg?updatedAt=1749772746345)
+
+![interfaces](https://ik.imagekit.io/p0mm3nebo/travelAdvisor/Group%209.jpg?updatedAt=1749772746254)
+
+![interfaces](https://ik.imagekit.io/p0mm3nebo/travelAdvisor/Group%2011.jpg?updatedAt=1749772746205)
+
+![interfaces](https://ik.imagekit.io/p0mm3nebo/travelAdvisor/Group%2013.jpg?updatedAt=1749772746279)
+
 ## 🧑‍💻 Contribuição
 
 Contribuições são bem-vindas!

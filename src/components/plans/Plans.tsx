@@ -7,7 +7,7 @@ import { FaPlaneDeparture } from "react-icons/fa";
 import { useMercadoPago } from "@/hooks/useMercadoPago";
 import { travelPlans } from "@/constants/plans";
 
-export function Payment({ session }: Readonly<{ session: Session }>) {
+export function Plans({ session }: Readonly<{ session: Session }>) {
   const { createMercadoPagoCheckout } = useMercadoPago();
 
   return (

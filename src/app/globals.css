@@ -120,3 +120,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+
+	body {
+		@apply bg-background text-foreground;
+	}
+
+	:root {
+		--scrollbar-thumb: #fff;
+	}
+
+}
+
+@layer utilities {
+	::-webkit-scrollbar {
+		width: 10px;
+		background-image: linear-gradient(to bottom, #101828, #000);
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: var(--scrollbar-thumb);
+		border-radius: 9999px;
+	}
+
+	::-webkit-scrollbar-track {
+		background-image: linear-gradient(to bottom, #101828, #000);
+	}
+}

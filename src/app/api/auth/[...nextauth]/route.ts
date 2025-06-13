@@ -30,6 +30,9 @@ const handler = NextAuth({
           where: { email: validated.email },
         });
         if (!user) throw new Error("Usuário não encontrado.");
+        if (!user.emailVerified) {
+          throw new Error("E-mail não verificado. Verifique seu e-mail antes de fazer login.");
+        }
         if (user.password !== validated.password) {
           throw new Error("Credenciais inválidas.");
         }
